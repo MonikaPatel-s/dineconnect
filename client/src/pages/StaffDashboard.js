@@ -252,7 +252,7 @@ export default function StaffDashboard({ user }) {
                   📍 Table {order.tableId?.number || 'N/A'}
                 </div>
                 <div className="order-customer">
-                  👤 {order.customerId?.name || 'Guest Customer'}
+                  👤 {order.customerName || order.customerId?.name || 'Guest Customer'}
                 </div>
               </div>
               

@@ -33,6 +33,7 @@ const orderSchema = new mongoose.Schema({
     amount: { type: Number }
   },
   guestSession: { type: String }, // For guest orders
+  customerName: { type: String, default: 'Guest Customer' }, // Store customer name
   orderNumber: { type: String, unique: true }
 }, {
   timestamps: true

@@ -83,6 +83,7 @@ router.post("/", async (req, res) => {
       tableId: table._id,
       customerId,
       guestSession,
+      customerName: customerId ? (await require('../models/User').findById(customerId).select('name'))?.name || 'Customer' : 'Guest Customer',
       items: orderItems,
       subtotal,
       tax,
