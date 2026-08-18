@@ -455,27 +455,32 @@ body {
 .dashboard-header {
   background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
   color: white;
-  padding: 20px 0;
+  padding: 10px 0;
   box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  overflow-x: auto;
 }
 
 .header-content {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 15px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  min-width: max-content;
 }
 
 .header-content h1 {
   margin: 0;
-  font-size: 28px;
+  font-size: 22px;
+  white-space: nowrap;
 }
 
 .header-actions {
   display: flex;
-  gap: 15px;
+  gap: 8px;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 
 .cart-btn, .logout-btn {
@@ -1816,8 +1821,11 @@ body {
   }
   
   .header-actions {
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 5px;
+    justify-content: center;
+  }
   }
   
   .admin-nav {
