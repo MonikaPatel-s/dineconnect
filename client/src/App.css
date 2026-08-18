@@ -3819,8 +3819,9 @@ des Section */
 
 .dark-theme .qr-error {
   background: linear-gradient(135deg, #e53e3e, #c53030);
-}/* Enha
-nced Table Card Styles */
+}
+
+/* Enhanced Table Card Styles */
 .table-card {
   background: white;
   border-radius: 15px;
