@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧪 Spin Wheel Testing Mode - DineConnect</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .testing-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .status-indicator {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .status-indicator.enabled {
+            background: rgba(40, 167, 69, 0.3);
+            border: 2px solid rgba(40, 167, 69, 0.6);
+        }
+        .status-indicator.disabled {
+            background: rgba(220, 53, 69, 0.3);
+            border: 2px solid rgba(220, 53, 69, 0.6);
+        }
+        .btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        .btn.secondary {
+            background: linear-gradient(135deg, #6c757d 0%, #495057 100%);
+        }
+        .btn.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+        }
+        .instructions {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .code-block {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+        .warning {
+            background: rgba(255, 193, 7, 0.2);
+            border: 2px solid rgba(255, 193, 7, 0.6);
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧪 Spin Wheel Testing Mode</h1>
+            <p>Enable unlimited spins for testing and development</p>
+        </div>
+
+        <div class="testing-card">
+            <h2>📊 Current Status</h2>
+            <div class="status-indicator enabled">
+                ✅ Testing Mode: ENABLED
+            </div>
+            <p>Multiple spins are currently allowed. The spin wheel button will not be disabled after spinning.</p>
+            
+            <h3>🔧 What's Changed:</h3>
+            <ul>
+                <li>✅ Button stays enabled after spinning</li>
+                <li>✅ Reset button appears after winning</li>
+                <li>✅ Can spin multiple times per session</li>
+                <li>✅ Perfect for testing all prize types</li>
+            </ul>
+        </div>
+
+        <div class="testing-card">
+            <h2>🎮 Testing Actions</h2>
+            
+            <a href="http://localhost:3001/m/table-1-1762347240202-dmaxjq17s" class="btn" target="_blank">
+                🎡 Test Spin Wheel
+            </a>
+            
+            <button class="btn secondary" onclick="clearAllData()">
+                🧹 Clear All Data
+            </button>
+            
+            <button class="btn success" onclick="showCurrentData()">
+                📊 Show Current Data
+            </button>
+            
+            <div id="dataDisplay" style="margin-top: 20px;"></div>
+        </div>
+
+        <div class="warning">
+            <h3>⚠️ Important Notes:</h3>
+            <ul>
+                <li><strong>Testing Only:</strong> This mode is for development and testing</li>
+                <li><strong>Production:</strong> Disable this before going live</li>
+                <li><strong>Revenue Impact:</strong> Multiple spins can increase discount costs</li>
+                <li><strong>Reset Required:</strong> Remember to revert changes for production</li>
+            </ul>
+        </div>
+
+        <div class="instructions">
+            <h3>🔄 How to Revert to Production Mode:</h3>
+            <p>Change this line in MenuByTable.js:</p>
+            <div class="code-block">
+// Change from:
+disabled={false} // Testing mode
+
+// Back to:
+disabled={appliedDiscount !== null} // Production mode
+            </div>
+            
+            <p>And remove the reset button code for production use.</p>
+        </div>
+
+        <div class="testing-card">
+            <h2>🎯 Testing Scenarios</h2>
+            <ol>
+                <li><strong>Test All Prizes:</strong> Spin multiple times to see all possible outcomes</li>
+                <li><strong>UI Testing:</strong> Check how button text changes for different prizes</li>
+                <li><strong>Reset Functionality:</strong> Use reset button to clear and spin again</li>
+                <li><strong>Data Persistence:</strong> Refresh page and check if data persists</li>
+                <li><strong>Multiple Tables:</strong> Test with different table URLs</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function clearAllData() {
+            const keys = Object.keys(localStorage);
+            const discountKeys = keys.filter(key => 
+                key.includes('discount') || key.includes('spin')
+            );
+            
+            discountKeys.forEach(key => localStorage.removeItem(key));
+            
+            document.getElementById('dataDisplay').innerHTML = `
+                <div style="background: rgba(40, 167, 69, 0.2); border: 2px solid rgba(40, 167, 69, 0.6); border-radius: 10px; padding: 15px; margin-top: 15px;">
+                    ✅ Cleared ${discountKeys.length} discount entries!
+                </div>
+            `;
+        }
+        
+        function showCurrentData() {
+            const keys = Object.keys(localStorage);
+            const discountKeys = keys.filter(key => 
+                key.includes('discount') || key.includes('spin')
+            );
+            
+            let html = '';
+            
+            if (discountKeys.length === 0) {
+                html = `
+                    <div style="background: rgba(23, 162, 184, 0.2); border: 2px solid rgba(23, 162, 184, 0.6); border-radius: 10px; padding: 15px; margin-top: 15px;">
+                        ℹ️ No discount data found
+                    </div>
+                `;
+            } else {
+                html = `
+                    <div style="background: rgba(0, 0, 0, 0.3); border-radius: 10px; padding: 15px; margin-top: 15px; font-family: 'Courier New', monospace; font-size: 14px;">
+                        <strong>Current Discount Data:</strong><br><br>
+                `;
+                
+                discountKeys.forEach(key => {
+                    const value = localStorage.getItem(key);
+                    html += `<strong>${key}:</strong><br>${value}<br><br>`;
+                });
+                
+                html += '</div>';
+            }
+            
+            document.getElementById('dataDisplay').innerHTML = html;
+        }
+    </script>
+</body>
+</html>

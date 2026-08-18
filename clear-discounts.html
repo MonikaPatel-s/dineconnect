@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧹 Clear Spin Wheel Data - DineConnect</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        .btn {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        .btn.success {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+        }
+        .btn.success:hover {
+            box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+        }
+        .status {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+        .status.success {
+            background: rgba(40, 167, 69, 0.2);
+            border: 2px solid rgba(40, 167, 69, 0.5);
+        }
+        .status.info {
+            background: rgba(23, 162, 184, 0.2);
+            border: 2px solid rgba(23, 162, 184, 0.5);
+        }
+        .data-list {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧹 Clear Spin Wheel Data</h1>
+        <p>Use this tool to clear all spin wheel discount data from your browser's local storage. This will reset all spin wheels to allow new spins.</p>
+        
+        <button class="btn" onclick="showCurrentData()">
+            📊 Show Current Data
+        </button>
+        
+        <button class="btn" onclick="clearAllDiscounts()">
+            🧹 Clear All Discounts
+        </button>
+        
+        <button class="btn success" onclick="goToMenu()">
+            🍽️ Go to Menu
+        </button>
+        
+        <div id="status"></div>
+        <div id="dataDisplay"></div>
+    </div>
+
+    <script>
+        function showCurrentData() {
+            const keys = Object.keys(localStorage);
+            const discountKeys = keys.filter(key => 
+                key.includes('discount') || 
+                key.includes('spin') || 
+                key.includes('customer-discount') ||
+                key.includes('-guest-')
+            );
+            
+            const dataDisplay = document.getElementById('dataDisplay');
+            
+            if (discountKeys.length === 0) {
+                dataDisplay.innerHTML = `
+                    <div class="status info">
+                        ℹ️ No spin wheel data found in localStorage
+                    </div>
+                `;
+            } else {
+                let dataHtml = '<div class="data-list"><strong>Found Discount Data:</strong><br><br>';
+                
+                discountKeys.forEach(key => {
+                    const value = localStorage.getItem(key);
+                    dataHtml += `<strong>${key}:</strong><br>${value}<br><br>`;
+                });
+                
+                dataHtml += '</div>';
+                dataDisplay.innerHTML = dataHtml;
+            }
+        }
+        
+        function clearAllDiscounts() {
+            const keys = Object.keys(localStorage);
+            const discountKeys = keys.filter(key => 
+                key.includes('discount') || 
+                key.includes('spin') || 
+                key.includes('customer-discount') ||
+                key.includes('-guest-')
+            );
+            
+            let clearedCount = 0;
+            
+            discountKeys.forEach(key => {
+                localStorage.removeItem(key);
+                clearedCount++;
+            });
+            
+            const status = document.getElementById('status');
+            const dataDisplay = document.getElementById('dataDisplay');
+            
+            if (clearedCount > 0) {
+                status.innerHTML = `
+                    <div class="status success">
+                        ✅ Successfully cleared ${clearedCount} discount entries!<br>
+                        All spin wheels are now reset and ready to use.
+                    </div>
+                `;
+                dataDisplay.innerHTML = '';
+            } else {
+                status.innerHTML = `
+                    <div class="status info">
+                        ℹ️ No discount data found to clear.<br>
+                        Spin wheels are already reset.
+                    </div>
+                `;
+            }
+        }
+        
+        function goToMenu() {
+            window.open('http://localhost:3001/m/table-1-1762347240202-dmaxjq17s', '_blank');
+        }
+        
+        // Auto-show current data on load
+        window.onload = function() {
+            showCurrentData();
+        };
+    </script>
+</body>
+</html>

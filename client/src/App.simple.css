@@ -1,0 +1,325 @@
+/* Simplified CSS for Production Build */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f5f5f5;
+}
+
+/* Login Page */
+.login-page {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #667eea 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Left Side - Branding */
+.login-branding {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.branding-content {
+  text-align: center;
+  color: white;
+  max-width: 550px;
+}
+
+.brand-logo {
+  margin-bottom: 30px;
+}
+
+.logo-icon {
+  font-size: 4rem;
+  display: inline-block;
+  padding: 20px;
+  background: rgba(255,255,255,0.15);
+  border-radius: 50%;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255,255,255,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.brand-title {
+  font-size: 4.5rem;
+  font-weight: 800;
+  margin: 0 0 20px 0;
+  text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+  background: linear-gradient(45deg, #ffffff, #f8f9ff, #e8eaff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -2px;
+  position: relative;
+}
+
+.brand-subtitle {
+  font-size: 1.4rem;
+  margin: 0 0 50px 0;
+  opacity: 0.95;
+  font-weight: 400;
+  font-style: italic;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Right Side - Login Form */
+.login-form-section {
+  flex: 0 0 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  position: relative;
+  z-index: 1;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 380px;
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.login-header h2 {
+  font-size: 2rem;
+  color: #333;
+  margin: 0 0 10px 0;
+  font-weight: 600;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login-input {
+  padding: 15px;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  background: white;
+}
+
+.login-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.login-btn {
+  padding: 16px;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  background: linear-gradient(135deg, #5a67d8, #6b46c1);
+}
+
+/* Basic responsive design */
+@media (max-width: 768px) {
+  .login-page {
+    flex-direction: column;
+  }
+  
+  .login-branding {
+    flex: 0 0 auto;
+    padding: 40px 20px;
+  }
+  
+  .brand-title {
+    font-size: 2.5rem;
+  }
+  
+  .login-form-section {
+    flex: 1;
+    padding: 20px;
+  }
+}
+
+/* Dashboard Styles */
+.customer-dashboard, .staff-dashboard, .admin-dashboard {
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+.dashboard-header, .staff-header, .admin-header {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 20px 0;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.header-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* Menu Cards */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.menu-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease;
+}
+
+.menu-card:hover {
+  transform: translateY(-2px);
+}
+
+.menu-card-image {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+
+.menu-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.menu-card-content {
+  padding: 15px;
+}
+
+.menu-card-title {
+  margin: 0 0 8px 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.menu-card-description {
+  color: #666;
+  font-size: 0.9rem;
+  margin: 0 0 15px 0;
+}
+
+.menu-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.price {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #667eea;
+}
+
+.add-btn {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-btn:hover {
+  background: #5a67d8;
+}
+
+/* Loading */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #667eea;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Utility Classes */
+.btn-primary {
+  background: #667eea;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+.btn-primary:hover {
+  background: #5a67d8;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt-20 {
+  margin-top: 20px;
+}
+
+.mb-20 {
+  margin-bottom: 20px;
+}

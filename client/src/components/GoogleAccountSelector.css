@@ -1,0 +1,255 @@
+/* Google Account Selector Popup */
+.google-popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.google-popup-container {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.24);
+  width: 400px;
+  max-width: 90vw;
+  max-height: 90vh;
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header */
+.google-popup-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #e8eaed;
+}
+
+.google-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #5f6368;
+}
+
+.google-close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #5f6368;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.google-close-btn:hover {
+  background-color: #f1f3f4;
+}
+
+/* Title */
+.google-popup-title {
+  padding: 24px 24px 16px;
+  text-align: center;
+}
+
+.google-popup-title h2 {
+  margin: 0 0 4px;
+  font-size: 24px;
+  font-weight: 400;
+  color: #202124;
+}
+
+.google-popup-title p {
+  margin: 0;
+  font-size: 16px;
+  color: #5f6368;
+}
+
+/* Accounts List */
+.google-accounts-list {
+  padding: 0 24px 24px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.google-account-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-bottom: 4px;
+  position: relative;
+}
+
+.google-account-item:hover {
+  background-color: #f8f9fa;
+}
+
+.google-account-item.selected {
+  background-color: #e8f0fe;
+  border: 1px solid #4285f4;
+}
+
+.google-account-item.add-account {
+  border-top: 1px solid #e8eaed;
+  margin-top: 8px;
+  padding-top: 16px;
+}
+
+.google-account-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 16px;
+  object-fit: cover;
+}
+
+.google-account-avatar.css-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 500;
+  font-size: 12px;
+  text-align: center;
+  line-height: 1;
+}
+
+.google-add-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f1f3f4;
+}
+
+.google-account-info {
+  flex: 1;
+}
+
+.google-account-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #202124;
+  margin-bottom: 2px;
+}
+
+.google-account-email {
+  font-size: 14px;
+  color: #5f6368;
+}
+
+/* Loading Spinner */
+.google-loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #4285f4;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Footer */
+.google-popup-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e8eaed;
+  background-color: #f8f9fa;
+}
+
+.google-footer-links {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.google-footer-links a {
+  color: #5f6368;
+  text-decoration: none;
+}
+
+.google-footer-links a:hover {
+  text-decoration: underline;
+}
+
+.google-footer-links span {
+  color: #dadce0;
+}
+
+/* Demo Mode Indicator */
+.google-demo-indicator {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background: #4285f4;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 10px;
+  font-weight: 500;
+}
+
+/* Mobile Responsive */
+@media (max-width: 480px) {
+  .google-popup-container {
+    width: 95vw;
+    margin: 20px;
+  }
+  
+  .google-popup-title h2 {
+    font-size: 20px;
+  }
+  
+  .google-account-item {
+    padding: 16px 12px;
+  }
+  
+  .google-account-avatar {
+    width: 36px;
+    height: 36px;
+    margin-right: 12px;
+  }
+}

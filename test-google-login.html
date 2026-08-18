@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Google Login Test</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+    <h1>🧪 Google Login Test</h1>
+    
+    <div id="google-signin-button"></div>
+    
+    <div id="debug-info">
+        <h3>Debug Info:</h3>
+        <div id="logs"></div>
+    </div>
+
+    <script>
+        function log(message) {
+            const logs = document.getElementById('logs');
+            logs.innerHTML += '<p>' + new Date().toLocaleTimeString() + ': ' + message + '</p>';
+            console.log(message);
+        }
+
+        window.onload = function() {
+            log('🔍 Page loaded, checking Google script...');
+            
+            setTimeout(() => {
+                if (window.google) {
+                    log('✅ Google script loaded successfully');
+                    
+                    try {
+                        window.google.accounts.id.initialize({
+                            client_id: '1234567890-abcdefghijklmnopqrstuvwxyz.apps.googleusercontent.com',
+                            callback: handleCredentialResponse,
+                            auto_select: false,
+                            cancel_on_tap_outside: true,
+                        });
+
+                        window.google.accounts.id.renderButton(
+                            document.getElementById('google-signin-button'),
+                            {
+                                theme: 'outline',
+                                size: 'large',
+                                text: 'signin_with',
+                                shape: 'rectangular',
+                                logo_alignment: 'left'
+                            }
+                        );
+                        
+                        log('✅ Google button rendered successfully');
+                    } catch (error) {
+                        log('❌ Error initializing Google: ' + error.message);
+                    }
+                } else {
+                    log('❌ Google script not loaded');
+                }
+            }, 2000);
+        };
+
+        function handleCredentialResponse(response) {
+            log('🎉 Google login response received');
+            log('Token: ' + response.credential.substring(0, 50) + '...');
+            
+            try {
+                // Decode JWT token
+                const userInfo = parseJwt(response.credential);
+                log('✅ User info: ' + JSON.stringify(userInfo));
+                
+                // Test API call
+                fetch('http://10.151.242.51:5001/api/auth/google-login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        email: userInfo.email,
+                        name: userInfo.name,
+                        picture: userInfo.picture,
+                        googleId: userInfo.sub,
+                        role: 'customer'
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    log('✅ API Response: ' + JSON.stringify(data));
+                })
+                .catch(err => {
+                    log('❌ API Error: ' + err.message);
+                });
+                
+            } catch (error) {
+                log('❌ Error processing response: ' + error.message);
+            }
+        }
+
+        function parseJwt(token) {
+            try {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(
+                    atob(base64)
+                        .split('')
+                        .map((c) => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2))
+                        .join('')
+                );
+                return JSON.parse(jsonPayload);
+            } catch (error) {
+                throw new Error('Invalid JWT token');
+            }
+        }
+    </script>
+</body>
+</html>

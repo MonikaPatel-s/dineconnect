@@ -1,0 +1,28 @@
+{
+  "name": "restaurant-qr-menu",
+  "version": "1.0.0",
+  "description": "DineConnect - Restaurant QR Menu System",
+  "main": "server/server.js",
+  "scripts": {
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "cd server && node server.js",
+    "client": "cd client && npm start",
+    "install-all": "npm install && cd server && npm install && cd ../client && npm install",
+    "build": "cd client && npm run build",
+    "start": "cd server && node server.js"
+  },
+  "keywords": [
+    "restaurant",
+    "qr-menu",
+    "nodejs",
+    "react"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.6.0"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

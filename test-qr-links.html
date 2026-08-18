@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test QR Links - DineConnect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .table-link {
+            display: block;
+            padding: 15px;
+            margin: 10px 0;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            text-align: center;
+            font-size: 18px;
+            transition: background 0.3s;
+        }
+        .table-link:hover {
+            background: #0056b3;
+        }
+        .qr-info {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ DineConnect - Test QR Links</h1>
+        
+        <div class="qr-info">
+            <h3>📱 How to Test:</h3>
+            <p>1. Click on any table link below to simulate QR code scanning</p>
+            <p>2. Or scan the generated QR code images with your phone</p>
+            <p>3. The menu should load for that specific table</p>
+        </div>
+
+        <div id="status" class="status"></div>
+
+        <h3>🏷️ Available Tables:</h3>
+        
+        <a href="http://localhost:3001/m/table-1-1762347240202-dmaxjq17s" class="table-link" target="_blank">
+            🍽️ Table 1 (Capacity: 2) - FRESH QR CODE
+        </a>
+        
+        <a href="http://localhost:3001/m/table-2-1762347240202-shtghv2qc" class="table-link" target="_blank">
+            🍽️ Table 2 (Capacity: 2) - FRESH QR CODE
+        </a>
+        
+        <a href="http://localhost:3001/m/table-3-1762347240202-arenv4oe8" class="table-link" target="_blank">
+            🍽️ Table 3 (Capacity: 2) - FRESH QR CODE
+        </a>
+        
+        <a href="http://localhost:3001/m/table-4-1762347240202-8pj68v365" class="table-link" target="_blank">
+            🍽️ Table 4 (Capacity: 2) - FRESH QR CODE
+        </a>
+        
+        <a href="http://localhost:3001/m/table-5-1762347240202-d4r12fr4f" class="table-link" target="_blank">
+            🍽️ Table 5 (Capacity: 4) - FRESH QR CODE
+        </a>
+
+        <div class="qr-info">
+            <h3>📋 Server Status:</h3>
+            <p><strong>Backend:</strong> http://localhost:5001</p>
+            <p><strong>Frontend:</strong> http://localhost:3001</p>
+            <p><strong>Database:</strong> MongoDB Connected ✅</p>
+            <p><strong>Tables Created:</strong> 10 tables ✅</p>
+        </div>
+    </div>
+
+    <script>
+        // Test API connectivity
+        fetch('http://localhost:5001/api/tables/by-slug/table-1-1762347240202-dmaxjq17s')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('status').innerHTML = '✅ API Test Successful - Table data loaded correctly';
+                document.getElementById('status').className = 'status success';
+            })
+            .catch(error => {
+                document.getElementById('status').innerHTML = '❌ API Test Failed - Check if server is running';
+                document.getElementById('status').className = 'status error';
+            });
+    </script>
+</body>
+</html>

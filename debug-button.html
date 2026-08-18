@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Debug Spin Button - DineConnect</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .test-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 18px;
+            margin: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        .test-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+        .test-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            animation: none;
+        }
+        .debug-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: left;
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+        .success { background: rgba(40, 167, 69, 0.3); }
+        .error { background: rgba(220, 53, 69, 0.3); }
+        .info { background: rgba(23, 162, 184, 0.3); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Spin Button Debug Tool</h1>
+        <p>Test different button states and behaviors</p>
+
+        <div class="debug-info">
+            <h3>🧪 Test Buttons:</h3>
+            
+            <button class="test-button" onclick="testClick('enabled')">
+                🎡 Enabled Button Test
+            </button>
+            
+            <button class="test-button" disabled onclick="testClick('disabled')">
+                🎡 Disabled Button Test
+            </button>
+            
+            <button class="test-button" onclick="testClick('free-dessert')" style="cursor: pointer !important;">
+                🎡 🍰 Free Dessert (Force Cursor)
+            </button>
+            
+            <button class="test-button" onclick="openSpinWheel()">
+                🎯 Open Real Spin Wheel
+            </button>
+        </div>
+
+        <div class="debug-info">
+            <h3>🔍 Debug Information:</h3>
+            <div id="debugOutput">Click buttons above to see debug info...</div>
+        </div>
+
+        <div class="debug-info">
+            <h3>🛠️ Browser Check:</h3>
+            <div id="browserInfo"></div>
+        </div>
+
+        <div class="debug-info">
+            <h3>💡 Possible Solutions:</h3>
+            <ol>
+                <li><strong>Clear Browser Cache:</strong> Ctrl+F5 or Cmd+Shift+R</li>
+                <li><strong>Check Console:</strong> F12 → Console tab for errors</li>
+                <li><strong>Disable Extensions:</strong> Try incognito mode</li>
+                <li><strong>Force Refresh:</strong> Hard reload the page</li>
+                <li><strong>Check CSS:</strong> Inspect element to see applied styles</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function testClick(type) {
+            const output = document.getElementById('debugOutput');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            output.innerHTML += `
+                <div class="status success">
+                    ✅ ${timestamp}: ${type} button clicked successfully!
+                </div>
+            `;
+            
+            console.log(`🔧 Button test: ${type} clicked at ${timestamp}`);
+        }
+        
+        function openSpinWheel() {
+            window.open('http://localhost:3001/m/table-1-1762347240202-dmaxjq17s', '_blank');
+        }
+        
+        // Browser info
+        document.getElementById('browserInfo').innerHTML = `
+            <div class="status info">
+                <strong>Browser:</strong> ${navigator.userAgent}<br>
+                <strong>Platform:</strong> ${navigator.platform}<br>
+                <strong>Cookies Enabled:</strong> ${navigator.cookieEnabled}<br>
+                <strong>Online:</strong> ${navigator.onLine}<br>
+                <strong>Screen:</strong> ${screen.width}x${screen.height}
+            </div>
+        `;
+        
+        // Check for cursor issues
+        document.addEventListener('DOMContentLoaded', function() {
+            const buttons = document.querySelectorAll('.test-button');
+            buttons.forEach((button, index) => {
+                button.addEventListener('mouseenter', function() {
+                    const computedStyle = window.getComputedStyle(button);
+                    console.log(`Button ${index} cursor:`, computedStyle.cursor);
+                    console.log(`Button ${index} disabled:`, button.disabled);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

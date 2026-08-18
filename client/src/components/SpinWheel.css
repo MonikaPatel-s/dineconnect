@@ -1,0 +1,452 @@
+/* Spin Wheel Overlay */
+.spin-wheel-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal */
+.spin-wheel-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Header */
+.spin-wheel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #f0f0f0;
+  padding-bottom: 15px;
+}
+
+.spin-wheel-header h2 {
+  margin: 0;
+  color: #333;
+  font-size: 24px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #999;
+  padding: 5px;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.close-btn:hover {
+  background: #f0f0f0;
+  color: #333;
+}
+
+/* Wheel Container */
+.spin-wheel-container {
+  text-align: center;
+}
+
+.wheel-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 30px;
+}
+
+/* Wheel */
+.wheel {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  position: relative;
+  border: 8px solid #333;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 4s cubic-bezier(0.23, 1, 0.32, 1);
+  background: conic-gradient(
+    #FF6B6B 0deg 45deg,
+    #4ECDC4 45deg 90deg,
+    #45B7D1 90deg 135deg,
+    #96CEB4 135deg 180deg,
+    #FFEAA7 180deg 225deg,
+    #DDA0DD 225deg 270deg,
+    #FD79A8 270deg 315deg,
+    #FFD93D 315deg 360deg
+  );
+}
+
+.wheel.spinning {
+  transition: transform 4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Wheel Segments */
+.wheel-segment {
+  position: absolute;
+  width: 50%;
+  height: 50%;
+  top: 50%;
+  left: 50%;
+  transform-origin: 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.segment-text {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%) rotate(-90deg);
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  white-space: nowrap;
+}
+
+/* Pointer */
+.wheel-pointer {
+  position: absolute;
+  top: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 30px;
+  color: #333;
+  z-index: 10;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  animation: pointerBounce 2s infinite;
+}
+
+@keyframes pointerBounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(-5px); }
+}
+
+/* Spin Button */
+.spin-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 15px 40px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.spin-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.6);
+}
+
+.spin-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.spin-button.spinning {
+  animation: buttonPulse 1s infinite;
+}
+
+@keyframes buttonPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+/* Reset Button */
+.reset-button {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 50px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+  transition: all 0.3s ease;
+  margin: 10px;
+}
+
+.reset-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.6);
+}
+
+/* Result */
+.spin-result {
+  margin-top: 20px;
+  animation: resultAppear 0.8s ease;
+}
+
+@keyframes resultAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.result-animation {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 25px;
+  border-radius: 15px;
+  position: relative;
+  overflow: hidden;
+}
+
+.confetti {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 30px;
+  animation: confettiFloat 2s infinite;
+}
+
+@keyframes confettiFloat {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(10deg) scale(1.1); }
+  75% { transform: rotate(-10deg) scale(0.9); }
+}
+
+.result-text {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.result-code {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border-radius: 8px;
+  margin: 15px 0;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+}
+
+.result-note {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 10px 0 0 0;
+}
+
+/* Rules */
+.spin-wheel-rules {
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.spin-wheel-rules h4 {
+  margin: 0 0 15px 0;
+  color: #333;
+  font-size: 16px;
+}
+
+.spin-wheel-rules ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+.spin-wheel-rules li {
+  margin-bottom: 8px;
+  color: #666;
+  font-size: 14px;
+}
+
+/* Actions */
+.spin-wheel-actions {
+  margin-top: 20px;
+}
+
+.continue-btn {
+  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+}
+
+.continue-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .spin-wheel-modal {
+    padding: 20px;
+    margin: 20px;
+  }
+  
+  .wheel {
+    width: 250px;
+    height: 250px;
+  }
+  
+  .spin-wheel-header h2 {
+    font-size: 20px;
+  }
+  
+  .spin-button {
+    padding: 12px 30px;
+    font-size: 16px;
+  }
+  
+  .segment-text {
+    font-size: 10px;
+  }
+}
+
+/* Special Effects */
+.wheel::before {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  right: -5px;
+  bottom: -5px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+  z-index: -1;
+  animation: wheelGlow 3s infinite;
+}
+
+@keyframes wheelGlow {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+
+/* Jackpot Effect */
+.wheel-segment[data-jackpot="true"] {
+  animation: jackpotGlow 2s infinite;
+}
+
+@keyframes jackpotGlow {
+  0%, 100% { box-shadow: inset 0 0 20px rgba(255, 215, 0, 0.5); }
+  50% { box-shadow: inset 0 0 30px rgba(255, 215, 0, 0.8); }
+}
+
+/* Milestone Info */
+.milestone-info {
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.total-spins-count {
+  margin-top: 6px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+/* Already spun */
+.already-spun-msg {
+  background: #fff3cd;
+  color: #856404;
+  padding: 16px;
+  border-radius: 12px;
+  font-size: 15px;
+  text-align: center;
+  margin: 10px 0;
+  border: 1px solid #ffc107;
+}
+
+/* Dark mode */
+.dark-theme .spin-wheel-modal {
+  background: #1e1e1e;
+  color: #f0f0f0;
+}
+
+.dark-theme .spin-wheel-header h2 {
+  color: #f0f0f0;
+}
+
+.dark-theme .spin-wheel-header {
+  border-bottom-color: #444;
+}
+
+.dark-theme .spin-wheel-rules {
+  background: #2d2d2d;
+}
+
+.dark-theme .spin-wheel-rules h4 {
+  color: #f0f0f0;
+}
+
+.dark-theme .spin-wheel-rules li {
+  color: #ccc;
+}
+
+.dark-theme .already-spun-msg {
+  background: #3d3000;
+  color: #ffc107;
+  border-color: #664d00;
+}
+
+.dark-theme .close-btn {
+  color: #ccc;
+}
+
+.dark-theme .close-btn:hover {
+  background: #3d3d3d;
+  color: #fff;
+}

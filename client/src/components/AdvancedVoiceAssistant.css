@@ -1,0 +1,425 @@
+.advanced-voice-assistant {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 20px;
+  padding: 25px;
+  margin: 20px 0;
+  color: white;
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+  max-width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+.advanced-voice-assistant::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(255,255,255,0.1) 100%);
+  pointer-events: none;
+}
+
+.voice-header {
+  text-align: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+  position: relative;
+  z-index: 1;
+}
+
+.voice-header h3 {
+  margin: 0 0 15px 0;
+  font-size: 24px;
+  font-weight: bold;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.assistant-controls {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 15px;
+}
+
+.language-selector,
+.personality-selector,
+.voice-selector {
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 25px;
+  padding: 8px 15px;
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.language-selector:hover,
+.personality-selector:hover,
+.voice-selector:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.language-selector option,
+.personality-selector option,
+.voice-selector option {
+  background: #667eea;
+  color: white;
+  padding: 5px;
+}
+
+.conversation-area {
+  max-height: 350px;
+  overflow-y: auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.message {
+  margin-bottom: 15px;
+  animation: slideInMessage 0.4s ease-out;
+}
+
+@keyframes slideInMessage {
+  from {
+    opacity: 0;
+    transform: translateY(15px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.message-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.sender-icon {
+  font-size: 22px;
+  min-width: 28px;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+}
+
+.message-text {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 12px 18px;
+  border-radius: 18px;
+  flex: 1;
+  word-wrap: break-word;
+  line-height: 1.4;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.message.customer .message-text {
+  background: linear-gradient(135deg, rgba(74, 144, 226, 0.4), rgba(74, 144, 226, 0.2));
+  margin-left: auto;
+  text-align: right;
+  border: 1px solid rgba(74, 144, 226, 0.3);
+}
+
+.message.assistant .message-text {
+  background: linear-gradient(135deg, rgba(46, 204, 113, 0.4), rgba(46, 204, 113, 0.2));
+  border: 1px solid rgba(46, 204, 113, 0.3);
+}
+
+.message.system .message-text {
+  background: linear-gradient(135deg, rgba(231, 76, 60, 0.4), rgba(231, 76, 60, 0.2));
+  font-style: italic;
+  border: 1px solid rgba(231, 76, 60, 0.3);
+}
+
+.typing {
+  position: relative;
+}
+
+.typing::after {
+  content: '...';
+  animation: typingDots 1.5s infinite;
+}
+
+@keyframes typingDots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+.current-transcript {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+  border-radius: 15px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-left: 4px solid #3498db;
+  font-style: italic;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.voice-controls {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.voice-btn {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  border: none;
+  border-radius: 50px;
+  padding: 20px 40px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  min-width: 220px;
+  position: relative;
+  overflow: hidden;
+}
+
+.voice-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transition: left 0.5s;
+}
+
+.voice-btn:hover::before {
+  left: 100%;
+}
+
+.voice-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+}
+
+.voice-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.voice-btn.listening {
+  background: linear-gradient(45deg, #27ae60, #2ecc71);
+  animation: pulseButton 2s infinite;
+}
+
+@keyframes pulseButton {
+  0% { 
+    transform: scale(1); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); 
+  }
+  50% { 
+    transform: scale(1.05); 
+    box-shadow: 0 12px 35px rgba(46, 204, 113, 0.5); 
+  }
+  100% { 
+    transform: scale(1); 
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3); 
+  }
+}
+
+.pulse-icon {
+  animation: pulseIcon 1s infinite;
+  display: inline-block;
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+.voice-examples {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 20px;
+  margin-top: 15px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.voice-examples h4 {
+  margin: 0 0 20px 0;
+  color: #f1c40f;
+  font-size: 18px;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+.examples-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.example-category {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.example-category:hover {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.example-category strong {
+  display: block;
+  margin-bottom: 12px;
+  color: #3498db;
+  font-size: 14px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+}
+
+.example-category ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.example-category li {
+  padding: 8px 0;
+  font-size: 13px;
+  opacity: 0.9;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: opacity 0.3s ease;
+}
+
+.example-category li:hover {
+  opacity: 1;
+  color: #f1c40f;
+}
+
+.example-category li:last-child {
+  border-bottom: none;
+}
+
+.voice-not-supported {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  text-align: center;
+  padding: 30px;
+}
+
+.voice-not-supported h3 {
+  margin: 0 0 15px 0;
+}
+
+.voice-not-supported p {
+  margin: 8px 0;
+  opacity: 0.9;
+}
+
+/* Scrollbar Styling */
+.conversation-area::-webkit-scrollbar {
+  width: 8px;
+}
+
+.conversation-area::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.conversation-area::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+}
+
+.conversation-area::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .advanced-voice-assistant {
+    margin: 10px;
+    padding: 20px;
+  }
+  
+  .voice-header h3 {
+    font-size: 20px;
+  }
+  
+  .assistant-controls {
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .language-selector,
+  .personality-selector {
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+  
+  .voice-btn {
+    padding: 18px 30px;
+    font-size: 14px;
+    min-width: 200px;
+  }
+  
+  .conversation-area {
+    max-height: 280px;
+    padding: 15px;
+  }
+  
+  .examples-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .example-category {
+    padding: 15px;
+  }
+  
+  .example-category li {
+    font-size: 12px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .advanced-voice-assistant {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  }
+}
+
+/* Special animations for personality changes */
+.personality-change {
+  animation: personalitySwitch 0.5s ease-in-out;
+}
+
+@keyframes personalitySwitch {
+  0% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.1) rotate(5deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+/* Language switch animation */
+.language-change {
+  animation: languageSwitch 0.6s ease-in-out;
+}
+
+@keyframes languageSwitch {
+  0% { opacity: 1; transform: translateX(0); }
+  50% { opacity: 0.5; transform: translateX(10px); }
+  100% { opacity: 1; transform: translateX(0); }
+}

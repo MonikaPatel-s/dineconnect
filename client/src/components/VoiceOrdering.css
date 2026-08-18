@@ -1,0 +1,134 @@
+.voice-ordering {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px 0;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.voice-controls {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.voice-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+  border: none;
+  border-radius: 50px;
+  padding: 15px 30px;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  min-width: 180px;
+}
+
+.voice-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.voice-btn.listening {
+  background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.pulse-icon {
+  animation: pulse-icon 1s infinite;
+  display: inline-block;
+}
+
+@keyframes pulse-icon {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+.voice-transcript {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  border-left: 4px solid #00d2ff;
+}
+
+.voice-feedback {
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 15px;
+  margin: 10px 0;
+  border-left: 4px solid #00ff88;
+  font-weight: 500;
+}
+
+.voice-examples {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 15px;
+  margin-top: 15px;
+}
+
+.voice-examples h4 {
+  margin: 0 0 10px 0;
+  color: #ffd700;
+}
+
+.voice-examples ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.voice-examples li {
+  padding: 5px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.voice-examples li:last-child {
+  border-bottom: none;
+}
+
+.voice-not-supported {
+  background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+  text-align: center;
+  padding: 20px;
+}
+
+.voice-not-supported p {
+  margin: 5px 0;
+  font-weight: 500;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .voice-ordering {
+    margin: 10px;
+    padding: 15px;
+  }
+  
+  .voice-btn {
+    padding: 12px 25px;
+    font-size: 14px;
+    min-width: 160px;
+  }
+  
+  .voice-examples {
+    font-size: 14px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .voice-ordering {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+  }
+}

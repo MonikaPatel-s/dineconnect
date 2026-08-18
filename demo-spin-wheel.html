@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎡 Spin & Win Discounts - DineConnect</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ffd93d 100%);
+            min-height: 100vh;
+            color: white;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 3.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: titleGlow 2s infinite;
+        }
+        @keyframes titleGlow {
+            0%, 100% { text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+            50% { text-shadow: 2px 2px 20px rgba(255,255,255,0.5); }
+        }
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px) scale(1.02);
+        }
+        .feature-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            animation: iconSpin 3s infinite linear;
+        }
+        @keyframes iconSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        .feature-card p {
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+        .demo-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-bottom: 30px;
+        }
+        .demo-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+        .demo-btn {
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .demo-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+        .prizes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .prize-card {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .prize-card:hover {
+            transform: scale(1.05);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+        .prize-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .prize-text {
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+        .prize-chance {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        .how-it-works {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .step {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+        .step-number {
+            background: rgba(255, 255, 255, 0.3);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎡 Spin & Win Discounts!</h1>
+            <p>Try your luck and win amazing discounts on your orders!</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Easy to Play</h3>
+                <p>Just click the spin button and watch the wheel spin! No complicated rules or requirements.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">🎁</div>
+                <h3>Amazing Prizes</h3>
+                <p>Win discounts from 5% to 50% OFF, plus special prizes like free desserts and drinks!</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Instant Rewards</h3>
+                <p>Your discount is applied immediately to your order. No waiting, no codes to remember!</p>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎮 Try the Spin Wheel Now!</h2>
+            <p>Visit any of our menu pages and look for the glowing "🎡 Spin & Win" button</p>
+            
+            <div class="demo-buttons">
+                <a href="http://localhost:3001/m/table-1-1762347240202-dmaxjq17s" class="demo-btn" target="_blank">
+                    🍽️ Table 1 Menu
+                </a>
+                <a href="http://localhost:3001/m/table-2-1762347240202-shtghv2qc" class="demo-btn" target="_blank">
+                    🍽️ Table 2 Menu
+                </a>
+                <a href="http://localhost:3001/login" class="demo-btn" target="_blank">
+                    👤 Customer Dashboard
+                </a>
+            </div>
+
+            <div class="prizes-grid">
+                <div class="prize-card">
+                    <div class="prize-icon">🥉</div>
+                    <div class="prize-text">5% OFF</div>
+                    <div class="prize-chance">25% Chance</div>
+                </div>
+                <div class="prize-card">
+                    <div class="prize-icon">🥈</div>
+                    <div class="prize-text">10% OFF</div>
+                    <div class="prize-chance">20% Chance</div>
+                </div>
+                <div class="prize-card">
+                    <div class="prize-icon">🥇</div>
+                    <div class="prize-text">15% OFF</div>
+                    <div class="prize-chance">15% Chance</div>
+                </div>
+                <div class="prize-card">
+                    <div class="prize-icon">🍰</div>
+                    <div class="prize-text">FREE DESSERT</div>
+                    <div class="prize-chance">15% Chance</div>
+                </div>
+                <div class="prize-card">
+                    <div class="prize-icon">🏆</div>
+                    <div class="prize-text">20% OFF</div>
+                    <div class="prize-chance">10% Chance</div>
+                </div>
+                <div class="prize-card">
+                    <div class="prize-icon">🥤</div>
+                    <div class="prize-text">FREE DRINK</div>
+                    <div class="prize-chance">10% Chance</div>
+                </div>
+                <div class="prize-card">
+                    <div class="prize-icon">💎</div>
+                    <div class="prize-text">25% OFF</div>
+                    <div class="prize-chance">3% Chance</div>
+                </div>
+                <div class="prize-card">
+                    <div class="prize-icon">🎉</div>
+                    <div class="prize-text">JACKPOT 50%</div>
+                    <div class="prize-chance">2% Chance</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="how-it-works">
+            <h2>🎮 How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h4>🎡 Find the Button</h4>
+                    <p>Look for the glowing "Spin & Win" button on menu pages</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h4>🎯 Click to Spin</h4>
+                    <p>Click the button and watch the wheel spin with excitement!</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h4>🎁 Win Prizes</h4>
+                    <p>Get discounts from 5% to 50% OFF or special free items!</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h4>💰 Auto Applied</h4>
+                    <p>Your discount is automatically applied to your order!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>🎯 Rules & Features</h2>
+            <div style="text-align: left; max-width: 600px; margin: 0 auto;">
+                <h4>🎮 Game Rules:</h4>
+                <ul>
+                    <li>🎡 One spin per visit/session</li>
+                    <li>🎁 All prizes are guaranteed - no losing spins!</li>
+                    <li>💰 Discounts apply to your current order</li>
+                    <li>⏰ Valid for today only</li>
+                    <li>🍰 Free items automatically added to benefits</li>
+                </ul>
+
+                <h4>🎯 Prize Probabilities:</h4>
+                <ul>
+                    <li>🥉 5% OFF - 25% chance (Most Common)</li>
+                    <li>🥈 10% OFF - 20% chance (Common)</li>
+                    <li>🥇 15% OFF - 15% chance (Good)</li>
+                    <li>🍰 Free Dessert - 15% chance (Special)</li>
+                    <li>🏆 20% OFF - 10% chance (Great)</li>
+                    <li>🥤 Free Drink - 10% chance (Special)</li>
+                    <li>💎 25% OFF - 3% chance (Rare)</li>
+                    <li>🎉 50% JACKPOT - 2% chance (Ultra Rare)</li>
+                </ul>
+
+                <h4>✨ Special Features:</h4>
+                <ul>
+                    <li>🎨 Beautiful animated wheel with smooth spinning</li>
+                    <li>🎵 Exciting visual effects and celebrations</li>
+                    <li>📱 Works perfectly on mobile and desktop</li>
+                    <li>💾 Remembers your discount for the session</li>
+                    <li>🔄 Button changes to show your won discount</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
