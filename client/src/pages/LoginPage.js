@@ -96,9 +96,7 @@ export default function LoginPage({ setUser }) {
           <div className="feature-item"><span className="feature-icon">📱</span><span className="feature-text">Scan QR Menu</span></div>
           <div className="feature-item">
             <span className="feature-icon">⭐</span>
-            <span className="feature-text">Rate & Review
-              <span style={{display:'block', fontSize:'13px', color:'#FFD700'}}>★★★★★</span>
-            </span>
+            <span className="feature-text">Rate & Review</span>
           </div>
           <div className="feature-item"><span className="feature-icon">❤️</span><span className="feature-text">Save Favorites</span></div>
           <div className="feature-item"><span className="feature-icon">🍽️</span><span className="feature-text">Digital Ordering</span></div>
