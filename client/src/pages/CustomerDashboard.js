@@ -15,7 +15,7 @@ import { useNotification } from "../contexts/NotificationContext";
 import "../App.css";
 
 export default function CustomerDashboard({ user }) {
-  const { t, toggleLanguage, language } = useLanguage();
+  const { t } = useLanguage();
   const { joinRoom, requestNotificationPermission, socket } = useNotification();
   const [menu, setMenu] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -270,22 +270,6 @@ export default function CustomerDashboard({ user }) {
           <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%', marginBottom:'10px'}}>
             <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
               <ThemeToggle />
-              <button
-                onClick={toggleLanguage}
-                style={{
-                  background:'rgba(255,255,255,0.15)',
-                  border:'2px solid rgba(255,255,255,0.3)',
-                  color:'white',
-                  padding:'8px 16px',
-                  borderRadius:'20px',
-                  cursor:'pointer',
-                  fontSize:'16px',
-                  fontWeight:'bold'
-                }}
-                title="Toggle Language"
-              >
-                {language === 'en' ? '🇮🇳 हिं' : '🇺🇸 EN'}
-              </button>
             </div>
             <NotificationBell />
           </div>

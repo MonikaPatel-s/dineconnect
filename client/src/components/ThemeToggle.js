@@ -21,7 +21,7 @@ export default function ThemeToggle() {
         onClick={toggleLanguage}
         title={language === 'en' ? 'Switch to Hindi' : 'Switch to English'}
       >
-        {language === 'en' ? 'हिं' : 'EN'}
+        {language === 'hi' ? 'हिं' : 'EN'}
       </button>
     </div>
   );

@@ -41,31 +41,11 @@ export const NotificationProvider = ({ children }) => {
     newSocket.on('connect', () => {
       console.log('🔔 Connected to notification server');
       setIsConnected(true);
-      
-      // Show connection success notification
-      addNotification({
-        id: Date.now(),
-        type: 'system',
-        title: 'Connected',
-        message: '🟢 Real-time notifications enabled',
-        timestamp: new Date(),
-        read: false
-      });
     });
 
     newSocket.on('disconnect', () => {
       console.log('🔔 Disconnected from notification server');
       setIsConnected(false);
-      
-      // Show disconnection notification
-      addNotification({
-        id: Date.now(),
-        type: 'system',
-        title: 'Disconnected',
-        message: '🔴 Connection lost. Trying to reconnect...',
-        timestamp: new Date(),
-        read: false
-      });
     });
 
     newSocket.on('connect_error', (error) => {
@@ -76,11 +56,23 @@ export const NotificationProvider = ({ children }) => {
     // Listen for order updates
     newSocket.on('order-update', (data) => {
       console.log('📱 Order update received:', data);
+      
+      const getStatusMessage = (status, orderNumber) => {
+        switch(status) {
+          case 'placed':    return `Order #${orderNumber} placed successfully! 🎉`;
+          case 'preparing': return `Order #${orderNumber} is being prepared 👨‍🍳`;
+          case 'ready':     return `Order #${orderNumber} is ready! Please collect 🍽️`;
+          case 'served':    return `Order #${orderNumber} has been served. Enjoy! 😊`;
+          case 'canceled':  return `Order #${orderNumber} has been canceled ❌`;
+          default:          return data.message || `Order #${orderNumber} updated`;
+        }
+      };
+
       addNotification({
         id: Date.now(),
         type: 'order-update',
-        title: 'Order Update',
-        message: data.message,
+        title: data.status ? `Order ${data.status.charAt(0).toUpperCase() + data.status.slice(1)}` : 'Order Update',
+        message: getStatusMessage(data.status, data.orderNumber),
         data: data,
         timestamp: new Date(),
         read: false
