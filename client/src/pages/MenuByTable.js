@@ -27,23 +27,28 @@ export default function MenuByTable({ user, setUser }) {
   const { joinRoom, requestNotificationPermission } = useNotification();
 
   useEffect(() => {
-    // Always force fresh login on every QR scan
-    localStorage.setItem('pendingTableSlug', tableSlug);
-    localStorage.removeItem('token');
-    navigate('/login');
-  }, []);
-
-  // After login, user prop will be set - load menu then
-  useEffect(() => {
-    if (!user) return;
-    if (user.role === 'staff') { navigate('/staff'); return; }
-    if (user.role === 'admin') { navigate('/admin'); return; }
-    // Customer - load menu
-    fetchTableInfo();
-    fetchMenu();
-    fetchCategories();
-    loadCart();
-  }, [user]);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      // No token - save slug and go to login
+      localStorage.setItem('pendingTableSlug', tableSlug);
+      navigate('/login');
+      return;
+    }
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.role === 'staff') { navigate('/staff'); return; }
+      if (payload.role === 'admin') { navigate('/admin'); return; }
+      // Valid customer token - load menu
+      fetchTableInfo();
+      fetchMenu();
+      fetchCategories();
+      loadCart();
+    } catch(e) {
+      localStorage.setItem('pendingTableSlug', tableSlug);
+      localStorage.removeItem('token');
+      navigate('/login');
+    }
+  }, [tableSlug]);
 
   useEffect(() => {
     // Join table-specific notification room for guest users

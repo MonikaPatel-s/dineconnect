@@ -16,7 +16,8 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // If opening a table QR URL (/m/...), save slug and clear session for fresh login
+    // If opening a table QR URL (/m/...) directly (fresh QR scan),
+    // clear token so customer must login fresh
     if (window.location.pathname.startsWith('/m/')) {
       const slug = window.location.pathname.replace('/m/', '');
       localStorage.setItem('pendingTableSlug', slug);
@@ -25,7 +26,7 @@ function App() {
       setLoading(false);
       return;
     }
-    // Check if user is logged in
+    // Normal page load - restore session if valid
     const token = localStorage.getItem('token');
     if (token) {
       try {
