@@ -140,6 +140,8 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
         if (response.ok) {
           const order = await response.json();
           console.log("✅ Order created successfully:", order);
+          // Save tableId so customer can receive socket notifications
+          localStorage.setItem('customer-tableId', selectedTable);
           setLastOrder({...order, paymentData});
           setShowReceipt(true);
           // Clear cart after successful order

@@ -40,7 +40,9 @@ export default function CustomerDashboard({ user }) {
     
     // Join notification room and request permission
     if (user) {
-      joinRoom('customer', user.userId);
+      // Join with tableId if previously ordered from a table
+      const savedTableId = localStorage.getItem('customer-tableId');
+      joinRoom('customer', user.userId, savedTableId || null);
       requestNotificationPermission();
     }
   }, [user, joinRoom, requestNotificationPermission]);
@@ -469,7 +471,14 @@ export default function CustomerDashboard({ user }) {
           onUpdateItem={updateCartItem}
           onClearAll={clearAllCart}
           appliedDiscount={appliedDiscount}
-          onOrderPlaced={fetchOrderHistory}
+          onOrderPlaced={() => {
+            fetchOrderHistory();
+            // Rejoin socket room with updated tableId after order is placed
+            const savedTableId = localStorage.getItem('customer-tableId');
+            if (savedTableId) {
+              joinRoom('customer', user?.userId, savedTableId);
+            }
+          }}
         />
       )}
 
