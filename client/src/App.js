@@ -59,7 +59,13 @@ function App() {
             <div className="App">
               <Routes>
                 {/* Public Routes */}
-                <Route path="/login" element={!user ? <LoginPage setUser={setUser} /> : <Navigate to={getDashboardRoute(user.role)} />} />
+                <Route path="/login" element={
+                  !user 
+                    ? <LoginPage setUser={setUser} /> 
+                    : localStorage.getItem('pendingTableSlug') && user.role === 'customer'
+                      ? <Navigate to={`/m/${localStorage.getItem('pendingTableSlug')}`} />
+                      : <Navigate to={getDashboardRoute(user.role)} />
+                } />
                 <Route path="/register" element={!user ? <Register /> : <Navigate to={getDashboardRoute(user.role)} />} />
                 <Route path="/m/:tableSlug" element={<MenuByTable user={user} setUser={setUser} />} />
 
