@@ -59,13 +59,7 @@ function App() {
             <div className="App">
               <Routes>
                 {/* Public Routes */}
-                <Route path="/login" element={
-                  !user 
-                    ? <LoginPage setUser={setUser} /> 
-                    : localStorage.getItem('pendingTableSlug') && user.role === 'customer'
-                      ? <Navigate to={`/m/${localStorage.getItem('pendingTableSlug')}`} />
-                      : <Navigate to={getDashboardRoute(user.role)} />
-                } />
+                <Route path="/login" element={!user ? <LoginPage setUser={setUser} /> : <Navigate to={getLoginRedirect(user)} />} />
                 <Route path="/register" element={!user ? <Register /> : <Navigate to={getDashboardRoute(user.role)} />} />
                 <Route path="/m/:tableSlug" element={<MenuByTable user={user} setUser={setUser} />} />
 
@@ -94,6 +88,15 @@ function getDashboardRoute(role) {
     case 'customer': return '/customer';
     default: return '/login';
   }
+}
+
+function getLoginRedirect(user) {
+  if (!user) return null;
+  const pendingTable = localStorage.getItem('pendingTableSlug');
+  if (pendingTable && user.role === 'customer') {
+    return `/m/${pendingTable}`;
+  }
+  return getDashboardRoute(user.role);
 }
 
 export default App;
