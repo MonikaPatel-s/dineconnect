@@ -425,7 +425,7 @@ export default function CustomerDashboard({ user }) {
                 <div className="qr-actions">
                   <button 
                     className="view-menu-btn"
-                    onClick={() => window.open(`http://localhost:3000/m/${table.qrSlug}`, '_blank')}
+                    onClick={() => window.open(`${window.location.origin}/m/${table.qrSlug}`, '_blank')}
                   >
                     🍽️ View Menu
                   </button>
