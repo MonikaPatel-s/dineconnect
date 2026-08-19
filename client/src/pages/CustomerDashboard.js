@@ -506,7 +506,7 @@ export default function CustomerDashboard({ user }) {
                           background: order.status === 'placed' ? '#f39c12' :
                                       order.status === 'preparing' ? '#3498db' :
                                       order.status === 'ready' ? '#27ae60' :
-                                      order.status === 'served' ? '#8e44ad' :
+                                      order.status === 'served' ? '#27ae60' :
                                       order.status === 'canceled' ? '#e74c3c' : '#95a5a6',
                           color: 'white',
                           padding: '4px 12px',
@@ -518,7 +518,7 @@ export default function CustomerDashboard({ user }) {
                           {order.status === 'placed' ? '🕐 Placed' :
                            order.status === 'preparing' ? '👨‍🍳 Preparing' :
                            order.status === 'ready' ? '✅ Ready' :
-                           order.status === 'served' ? '🎉 Served' :
+                           order.status === 'served' ? '✅ Completed' :
                            order.status === 'canceled' ? '❌ Canceled' : order.status}
                         </span>
                       </div>

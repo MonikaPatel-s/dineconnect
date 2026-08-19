@@ -188,7 +188,10 @@ export default function StaffDashboard({ user }) {
             className={`filter-btn ${selectedStatus === status ? 'active' : ''}`}
             onClick={() => setSelectedStatus(status)}
           >
-            {status.charAt(0).toUpperCase() + status.slice(1)}
+            {status === 'placed' ? '🕐 Placed' :
+             status === 'preparing' ? '👨‍🍳 Preparing' :
+             status === 'ready' ? '✅ Ready' :
+             '✅ Completed'}
             {` (${allOrders.filter(o => o.status === status).length})`}
           </button>
         ))}
@@ -243,7 +246,11 @@ export default function StaffDashboard({ user }) {
                   #{order.orderNumber}
                 </div>
                 <div className={`order-status status-${order.status}`}>
-                  {order.status}
+                  {order.status === 'placed' ? '🕐 Placed' :
+                   order.status === 'preparing' ? '👨‍🍳 Preparing' :
+                   order.status === 'ready' ? '🔔 Ready' :
+                   order.status === 'served' ? '✅ Completed' :
+                   order.status === 'canceled' ? '❌ Canceled' : order.status}
                 </div>
               </div>
               

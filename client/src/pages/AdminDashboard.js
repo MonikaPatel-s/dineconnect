@@ -557,7 +557,12 @@ export default function AdminDashboard({ user }) {
                     <div className="order-header">
                       <div className="order-number">#{order.orderNumber}</div>
                       <div className={`order-status status-${order.status}`}>
-                        {order.status.toUpperCase()}
+                        {order.status === 'placed' ? '🕐 PLACED' :
+                         order.status === 'preparing' ? '👨‍🍳 PREPARING' :
+                         order.status === 'ready' ? '🔔 READY' :
+                         order.status === 'served' ? '✅ COMPLETED' :
+                         order.status === 'canceled' ? '❌ CANCELED' :
+                         order.status.toUpperCase()}
                       </div>
                     </div>
                     
