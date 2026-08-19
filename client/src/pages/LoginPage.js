@@ -89,7 +89,7 @@ export default function LoginPage({ setUser }) {
         <div className="brand-logo"><span className="logo-icon">🍽️</span></div>
         <h1 className="brand-title">DineConnect</h1>
         <p className="brand-subtitle">Connecting Diners with Great Food</p>
-        <div className="brand-description">
+        <div className="brand-description" style={{marginTop:'-8px'}}>
           <p>Where great food meets unforgettable moments.</p>
         </div>
         <div className="brand-features">
