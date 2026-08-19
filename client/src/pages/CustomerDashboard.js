@@ -15,7 +15,7 @@ import { useNotification } from "../contexts/NotificationContext";
 import "../App.css";
 
 export default function CustomerDashboard({ user }) {
-  const { t } = useLanguage();
+  const { t, toggleLanguage, language } = useLanguage();
   const { joinRoom, requestNotificationPermission, socket } = useNotification();
   const [menu, setMenu] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -257,66 +257,104 @@ export default function CustomerDashboard({ user }) {
       {/* Header */}
       <header className="dashboard-header">
         <div className="header-content">
-          <div>
-            <h1>🍽️ Welcome, {user?.name || 'Guest'}!</h1>
-            <p>What would you like to order today?</p>
-            <button className="logout-btn mobile-logout-only" onClick={logout} style={{display:'none'}}>
+
+          {/* Row 1: Welcome (left) + Logout (right) */}
+          <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%', marginBottom:'12px'}}>
+            <h1 style={{fontSize:'22px', margin:0}}>🍽️ Welcome, {user?.name || 'Guest'}!</h1>
+            <button className="logout-btn" onClick={logout} style={{fontSize:'16px', padding:'10px 20px'}}>
               {t('logout')}
             </button>
           </div>
-          <div className="header-actions">
+
+          {/* Row 2: Dark Mode + Language (left) | Notification (right) */}
+          <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%', marginBottom:'10px'}}>
+            <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
+              <ThemeToggle />
+              <button
+                onClick={toggleLanguage}
+                style={{
+                  background:'rgba(255,255,255,0.15)',
+                  border:'2px solid rgba(255,255,255,0.3)',
+                  color:'white',
+                  padding:'8px 16px',
+                  borderRadius:'20px',
+                  cursor:'pointer',
+                  fontSize:'16px',
+                  fontWeight:'bold'
+                }}
+                title="Toggle Language"
+              >
+                {language === 'en' ? '🇮🇳 हिं' : '🇺🇸 EN'}
+              </button>
+            </div>
             <NotificationBell />
-            <ThemeToggle />
-            <button 
+          </div>
+
+          {/* Row 3: Menu | My Favorites | QR Codes */}
+          <div style={{display:'flex', gap:'10px', width:'100%', marginBottom:'10px', flexWrap:'wrap'}}>
+            <button
               className={`nav-btn ${currentView === 'menu' ? 'active' : ''}`}
               onClick={() => setCurrentView('menu')}
+              style={{flex:1, fontSize:'16px', padding:'12px 8px', minWidth:'80px'}}
             >
               🍽️ {t('menu')}
             </button>
-            <button 
+            <button
               className={`nav-btn ${currentView === 'favorites' ? 'active' : ''}`}
               onClick={() => setCurrentView('favorites')}
+              style={{flex:1, fontSize:'16px', padding:'12px 8px', minWidth:'80px'}}
             >
               ❤️ {t('favorites')}
             </button>
-            <button 
+            <button
               className={`nav-btn ${currentView === 'qrcodes' ? 'active' : ''}`}
               onClick={() => setCurrentView('qrcodes')}
+              style={{flex:1, fontSize:'16px', padding:'12px 8px', minWidth:'80px'}}
             >
               📱 QR Codes
             </button>
-            <button 
+          </div>
+
+          {/* Row 4: Dine | Spin */}
+          <div style={{display:'flex', gap:'10px', width:'100%', marginBottom:'10px'}}>
+            <button
               className={`nav-btn ${currentView === 'voice' ? 'active' : ''}`}
               onClick={() => setCurrentView('voice')}
+              style={{flex:1, fontSize:'16px', padding:'12px 8px'}}
             >
               🎤 Dine
             </button>
-            <button 
-              className="history-btn"
-              onClick={() => { fetchOrderHistory(); setShowHistory(true); }}
-            >
-              📋 {t('orderHistory')}
-            </button>
-            <button 
+            <button
               className="spin-wheel-btn"
               onClick={() => setShowSpinWheel(true)}
               disabled={appliedDiscount !== null}
-              title={appliedDiscount ? 
-                (appliedDiscount.isSpecial ? "🎉 Special 50% discount applied!" : "Already used spin wheel today") 
+              title={appliedDiscount ?
+                (appliedDiscount.isSpecial ? "🎉 Special 50% discount applied!" : "Already used spin wheel today")
                 : "Spin for discounts!"}
+              style={{flex:1, fontSize:'16px', padding:'12px 8px'}}
             >
               🎡 {appliedDiscount ? getDiscountText(appliedDiscount) : 'Spin & Win'}
             </button>
-            <button 
+          </div>
+
+          {/* Row 5: Cart | Order History */}
+          <div style={{display:'flex', gap:'10px', width:'100%', marginBottom:'4px'}}>
+            <button
               className="cart-btn"
               onClick={() => setShowCart(true)}
+              style={{flex:1, fontSize:'16px', padding:'12px 8px'}}
             >
               🛒 {t('cart')} ({cartItemsCount})
             </button>
-            <button className="logout-btn" onClick={logout}>
-              {t('logout')}
+            <button
+              className="history-btn"
+              onClick={() => { fetchOrderHistory(); setShowHistory(true); }}
+              style={{flex:1, fontSize:'16px', padding:'12px 8px'}}
+            >
+              📋 {t('orderHistory')}
             </button>
           </div>
+
         </div>
       </header>
 
