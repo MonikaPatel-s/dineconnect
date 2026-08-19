@@ -11,9 +11,13 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
   const [lastOrder, setLastOrder] = useState(null);
   const [tables, setTables] = useState([]);
   const [selectedTable, setSelectedTable] = useState("");
+  const [couponCode, setCouponCode] = useState("");
+  const [couponDiscount, setCouponDiscount] = useState(null);
+  const [couponLoading, setCouponLoading] = useState(false);
   const subtotal = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-  const discountAmount = appliedDiscount?.discount ? Math.round(subtotal * appliedDiscount.discount / 100) : 0;
-  const total = subtotal - discountAmount;
+  const spinDiscountAmount = appliedDiscount?.discount ? Math.round(subtotal * appliedDiscount.discount / 100) : 0;
+  const couponDiscountAmount = couponDiscount ? couponDiscount.discountAmount : 0;
+  const total = subtotal - spinDiscountAmount - couponDiscountAmount;
 
   useEffect(() => {
     fetch(`${config.API_BASE_URL}/tables/public`)
@@ -47,6 +51,29 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
         cart.forEach(item => onUpdateItem(item._id, 0));
       }
     }
+  };
+
+  const applyCoupon = async () => {
+    if (!couponCode.trim()) return;
+    setCouponLoading(true);
+    try {
+      const res = await fetch(`${config.API_BASE_URL}/coupons/validate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: couponCode, orderAmount: subtotal })
+      });
+      const data = await res.json();
+      if (res.ok && data.valid) {
+        setCouponDiscount(data);
+        alert(`✅ ${data.message}`);
+      } else {
+        alert(`❌ ${data.message}`);
+        setCouponDiscount(null);
+      }
+    } catch (e) {
+      alert('Error applying coupon');
+    }
+    setCouponLoading(false);
   };
 
   const handlePlaceOrder = async () => {

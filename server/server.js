@@ -14,6 +14,7 @@ const orderRoutes = require("./routes/orderRoutes");
 const tableRoutes = require("./routes/tableRoutes");
 const reviewRoutes = require("./routes/reviewRoutes");
 const favoriteRoutes = require("./routes/favoriteRoutes");
+const couponRoutes = require("./routes/couponRoutes");
 
 const app = express();
 
@@ -77,6 +78,7 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/tables", tableRoutes);
 app.use("/api/reviews", reviewRoutes);
 app.use("/api/favorites", favoriteRoutes);
+app.use("/api/coupons", couponRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

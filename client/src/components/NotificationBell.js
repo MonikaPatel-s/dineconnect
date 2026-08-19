@@ -50,14 +50,22 @@ const NotificationBell = () => {
         <div className="notification-dropdown">
           <div className="notification-header">
             <h3>Notifications</h3>
-            {notifications.length > 0 && (
+            <div style={{display:'flex', gap:'8px', alignItems:'center'}}>
+              {notifications.length > 0 && (
+                <button 
+                  className="clear-all-btn"
+                  onClick={clearNotifications}
+                >
+                  Clear All
+                </button>
+              )}
               <button 
-                className="clear-all-btn"
-                onClick={clearNotifications}
+                onClick={() => setShowDropdown(false)}
+                style={{background:'none', border:'none', cursor:'pointer', fontSize:'20px', color:'#fff', lineHeight:1}}
               >
-                Clear All
+                ✕
               </button>
-            )}
+            </div>
           </div>
 
           <div className="notification-list">
@@ -97,7 +105,7 @@ const NotificationBell = () => {
 
           <div className="notification-footer">
             <small>
-              Status: {isConnected ? '🟢 Connected' : '🔴 Disconnected'}
+              {isConnected ? '🟢 Real-time active' : '🔴 Reconnecting...'}
             </small>
           </div>
         </div>
