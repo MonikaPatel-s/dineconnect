@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import config from "../config";
 import "../App.css";
 import "../components/GoogleLogin.css";
 
 export default function LoginPage({ setUser }) {
+  const navigate = useNavigate();
   const [selectedRole, setSelectedRole] = useState(null);
   const [staffMode, setStaffMode] = useState('login');
   const [customerMode, setCustomerMode] = useState('login');
@@ -47,7 +49,7 @@ export default function LoginPage({ setUser }) {
           const pendingTable = localStorage.getItem('pendingTableSlug');
           if (pendingTable && data.user.role === 'customer') {
             localStorage.removeItem('pendingTableSlug');
-            window.location.href = `/m/${pendingTable}`;
+            navigate(`/m/${pendingTable}`);
           } else {
             // Staff/Admin - clear any pending table
             localStorage.removeItem('pendingTableSlug');
