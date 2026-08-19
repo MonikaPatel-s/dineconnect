@@ -421,6 +421,7 @@ export default function MenuByTable({ user, setUser }) {
           onUpdateItem={updateCartItem}
           onPlaceOrder={placeOrder}
           isGuest={true}
+          preSelectedTable={table?._id}
         />
       )}
 

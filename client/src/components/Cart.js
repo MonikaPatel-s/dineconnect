@@ -4,13 +4,13 @@ import PaymentModal from "./PaymentModal";
 import config from "../config";
 import "../App.css";
 
-export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClearAll, appliedDiscount, onOrderPlaced }) {
+export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClearAll, appliedDiscount, onOrderPlaced, preSelectedTable }) {
   const [showReceipt, setShowReceipt] = useState(false);
   const [showPayment, setShowPayment] = useState(false);
   const [showOrderConfirm, setShowOrderConfirm] = useState(false);
   const [lastOrder, setLastOrder] = useState(null);
   const [tables, setTables] = useState([]);
-  const [selectedTable, setSelectedTable] = useState("");
+  const [selectedTable, setSelectedTable] = useState(preSelectedTable || "");
   const [couponCode, setCouponCode] = useState("");
   const [couponDiscount, setCouponDiscount] = useState(null);
   const [couponLoading, setCouponLoading] = useState(false);
@@ -25,6 +25,11 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
       .then(data => setTables(data))
       .catch(() => {});
   }, []);
+
+  // Auto-select table when preSelectedTable changes
+  useEffect(() => {
+    if (preSelectedTable) setSelectedTable(preSelectedTable);
+  }, [preSelectedTable]);
 
   const updateQuantity = (itemId, newQty) => {
     if (newQty <= 0) {
@@ -386,6 +391,11 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
           onClose={() => {
             setShowReceipt(false);
             onClose();
+            // Clear session after order complete
+            localStorage.removeItem('token');
+            localStorage.removeItem('pendingTableSlug');
+            localStorage.removeItem('currentTable');
+            window.location.href = '/login';
           }}
           restaurantInfo={{
             name: "DineConnect",
