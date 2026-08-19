@@ -2,7 +2,6 @@ import { useState } from "react";
 import config from "../config";
 import "../App.css";
 import "../components/GoogleLogin.css";
-import logoImg from "../assets/logo.png";
 
 export default function LoginPage({ setUser }) {
   const [selectedRole, setSelectedRole] = useState(null);
@@ -87,20 +86,19 @@ export default function LoginPage({ setUser }) {
   const Branding = () => (
     <div className="login-branding">
       <div className="branding-content">
-        <div className="brand-logo">
-          <img src={logoImg} alt="DineConnect Logo" style={{width:'220px', height:'220px', objectFit:'contain', marginBottom:'0'}} />
-        </div>
-        <p className="brand-subtitle" style={{fontSize:'22px', fontWeight:'700', marginTop:'6px', marginBottom:'2px'}}>Connecting Diners with Great Food</p>
-        <div className="brand-description" style={{marginTop:'0'}}>
-          <p style={{marginTop:'2px', marginBottom:'0'}}>Where great food meets unforgettable moments.</p>
+        <div className="brand-logo"><span className="logo-icon">🍽️</span></div>
+        <h1 className="brand-title">DineConnect</h1>
+        <p className="brand-subtitle">Connecting Diners with Great Food</p>
+        <div className="brand-description">
+          <p>Where great food meets unforgettable moments.</p>
         </div>
         <div className="brand-features">
-          <div className="feature-item"><span className="feature-icon">📱</span><span className="feature-text">Scan QR</span></div>
+          <div className="feature-item"><span className="feature-icon">📱</span><span className="feature-text">Scan QR Menu</span></div>
           <div className="feature-item">
             <span className="feature-icon">⭐</span>
             <span className="feature-text">Rate & Review</span>
           </div>
-          
+          <div className="feature-item"><span className="feature-icon">❤️</span><span className="feature-text">Save Favorites</span></div>
           <div className="feature-item"><span className="feature-icon">🍽️</span><span className="feature-text">Digital Ordering</span></div>
         </div>
       </div>
