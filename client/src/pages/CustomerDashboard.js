@@ -25,11 +25,14 @@ export default function CustomerDashboard({ user }) {
   const [loading, setLoading] = useState(true);
   const [orderHistory, setOrderHistory] = useState([]);
   const [showHistory, setShowHistory] = useState(false);
-  const [currentView, setCurrentView] = useState('menu'); // menu, favorites, reviews, qrcodes
+  const [currentView, setCurrentView] = useState('menu');
   const [selectedItemForReview, setSelectedItemForReview] = useState(null);
   const [tables, setTables] = useState([]);
   const [showSpinWheel, setShowSpinWheel] = useState(false);
   const [appliedDiscount, setAppliedDiscount] = useState(null);
+
+  // Get current table from localStorage (set when QR was scanned)
+  const currentTable = JSON.parse(localStorage.getItem('currentTable') || 'null');
 
   useEffect(() => {
     fetchMenu();
@@ -268,12 +271,24 @@ export default function CustomerDashboard({ user }) {
             </button>
           </div>
 
-          {/* Row 2: Dark Mode + Language (left) | Notification (right) */}
+          {/* Row 2: Dark Mode + Language (left) | Table Number + Notification (right) */}
           <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'100%', marginBottom:'10px'}}>
             <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
               <ThemeToggle />
             </div>
-            <NotificationBell />
+            <div style={{display:'flex', gap:'10px', alignItems:'center'}}>
+              {currentTable && (
+                <div style={{
+                  background:'linear-gradient(135deg,#667eea,#764ba2)',
+                  color:'white', padding:'8px 14px', borderRadius:'20px',
+                  fontSize:'14px', fontWeight:'bold', display:'flex',
+                  alignItems:'center', gap:'6px'
+                }}>
+                  🪑 Table - {currentTable.number}
+                </div>
+              )}
+              <NotificationBell />
+            </div>
           </div>
 
           {/* Row 3: Menu | My Favorites | QR Codes */}
@@ -471,6 +486,7 @@ export default function CustomerDashboard({ user }) {
           onUpdateItem={updateCartItem}
           onClearAll={clearAllCart}
           appliedDiscount={appliedDiscount}
+          preSelectedTable={currentTable?.tableId}
           onOrderPlaced={() => {
             fetchOrderHistory();
             // Rejoin socket room with updated tableId after order is placed
