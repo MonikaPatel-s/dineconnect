@@ -5,7 +5,8 @@ const tableSchema = new mongoose.Schema({
   qrSlug: { type: String, required: true, unique: true },
   activeSessionId: { type: String, default: null },
   isActive: { type: Boolean, default: true },
-  capacity: { type: Number, default: 4 }
+  capacity: { type: Number, default: 4 },
+  status: { type: String, enum: ['available', 'occupied'], default: 'available' }
 }, {
   timestamps: true
 });

@@ -99,6 +99,10 @@ router.post("/", async (req, res) => {
     });
 
     await order.save();
+    
+    // Mark table as occupied when order is placed
+    await Table.findByIdAndUpdate(table._id, { status: 'occupied' });
+    
     await order.populate([
       { path: 'tableId', select: 'number' },
       { path: 'items.menuItemId', select: 'name price imageUrl' }
@@ -199,6 +203,19 @@ router.patch("/:id/status", staffOrAdmin, async (req, res) => {
 
     if (!order) {
       return res.status(404).json({ message: "Order not found" });
+    }
+
+    // When order is served or canceled, free up the table
+    if (status === 'served' || status === 'canceled') {
+      // Check if any other active orders exist for this table
+      const activeOrders = await Order.countDocuments({
+        tableId: order.tableId._id,
+        status: { $in: ['placed', 'preparing', 'ready'] },
+        _id: { $ne: order._id }
+      });
+      if (activeOrders === 0) {
+        await Table.findByIdAndUpdate(order.tableId._id, { status: 'available' });
+      }
     }
 
     // Send real-time notification to customer

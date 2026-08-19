@@ -391,11 +391,6 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
           onClose={() => {
             setShowReceipt(false);
             onClose();
-            // Clear session after order complete
-            localStorage.removeItem('token');
-            localStorage.removeItem('pendingTableSlug');
-            localStorage.removeItem('currentTable');
-            window.location.href = '/login';
           }}
           restaurantInfo={{
             name: "DineConnect",
