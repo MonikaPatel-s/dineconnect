@@ -34,7 +34,6 @@ export default function AdminDashboard({ user }) {
   useEffect(() => {
     fetchData();
     fetchPendingStaff();
-    fetchCoupons();
   }, []);
 
   const fetchPendingStaff = async () => {
@@ -349,6 +348,9 @@ export default function AdminDashboard({ user }) {
       }
     } catch (e) {}
   };
+
+  // Load coupons on mount
+  useEffect(() => { fetchCoupons(); }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const saveCoupon = async () => {
     if (!couponForm.code || !couponForm.discountValue) {
