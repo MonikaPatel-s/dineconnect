@@ -93,13 +93,10 @@ export default function LoginPage({ setUser }) {
           <p>Where great food meets unforgettable moments.</p>
         </div>
         <div className="brand-features">
-          <div className="feature-item"><span className="feature-icon">📱</span><span className="feature-text">Scan QR Menu</span></div>
           <div className="feature-item">
             <span className="feature-icon">⭐</span>
             <span className="feature-text">Rate & Review</span>
           </div>
-          <div className="feature-item"><span className="feature-icon">❤️</span><span className="feature-text">Save Favorites</span></div>
-          <div className="feature-item"><span className="feature-icon">🍽️</span><span className="feature-text">Digital Ordering</span></div>
         </div>
       </div>
     </div>
