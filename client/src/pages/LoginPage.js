@@ -43,11 +43,14 @@ export default function LoginPage({ setUser }) {
             setTimeout(() => alert(`🎉 You are our 10,000th Customer! 50% OFF! 🥳`), 500);
           }
           setUser(data.user);
-          // Redirect to pending table if came from QR scan
+          // Redirect to pending table only for customers
           const pendingTable = localStorage.getItem('pendingTableSlug');
           if (pendingTable && data.user.role === 'customer') {
             localStorage.removeItem('pendingTableSlug');
             window.location.href = `/m/${pendingTable}`;
+          } else {
+            // Staff/Admin - clear any pending table
+            localStorage.removeItem('pendingTableSlug');
           }
         }
       } else {
