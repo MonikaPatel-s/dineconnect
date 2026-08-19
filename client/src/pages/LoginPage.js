@@ -126,36 +126,36 @@ export default function LoginPage({ setUser }) {
             <div style={{display:'flex', flexDirection:'column', gap:'16px', marginTop:'20px'}}>
               <button onClick={() => { setSelectedRole('admin'); resetFields(); }}
                 style={{padding:'20px', borderRadius:'16px', border:'none',
-                  background:'linear-gradient(135deg,#1a1a2e,#16213e)', color:'white',
+                  background:'linear-gradient(135deg,#B8860B,#DAA520)', color:'white',
                   cursor:'pointer', fontSize:'16px', fontWeight:'bold',
                   display:'flex', alignItems:'center', gap:'14px',
-                  boxShadow:'0 4px 15px rgba(26,26,46,0.4)'}}>
+                  boxShadow:'0 4px 15px rgba(184,134,11,0.4)'}}>
                 <span style={{fontSize:'32px'}}>👑</span>
                 <div style={{textAlign:'left'}}>
                   <div style={{fontSize:'18px'}}>Admin</div>
-                  <div style={{fontSize:'12px', opacity:0.75, fontWeight:'normal'}}>Full system control</div>
+                  <div style={{fontSize:'12px', opacity:0.85, fontWeight:'normal'}}>Full system control</div>
                 </div>
               </button>
 
               <button onClick={() => { setSelectedRole('staff'); setStaffMode('login'); resetFields(); }}
                 style={{padding:'20px', borderRadius:'16px', border:'none',
-                  background:'linear-gradient(135deg,#c0392b,#e74c3c)', color:'white',
+                  background:'linear-gradient(135deg,#2c3e50,#3498db)', color:'white',
                   cursor:'pointer', fontSize:'16px', fontWeight:'bold',
                   display:'flex', alignItems:'center', gap:'14px',
-                  boxShadow:'0 4px 15px rgba(192,57,43,0.4)'}}>
+                  boxShadow:'0 4px 15px rgba(44,62,80,0.4)'}}>
                 <span style={{fontSize:'32px'}}>👨‍🍳</span>
                 <div style={{textAlign:'left'}}>
                   <div style={{fontSize:'18px'}}>Chef / Staff</div>
-                  <div style={{fontSize:'12px', opacity:0.75, fontWeight:'normal'}}>Manage orders & kitchen</div>
+                  <div style={{fontSize:'12px', opacity:0.85, fontWeight:'normal'}}>Manage orders & kitchen</div>
                 </div>
               </button>
 
               <button onClick={() => { setSelectedRole('customer'); setCustomerMode('login'); resetFields(); }}
                 style={{padding:'20px', borderRadius:'16px', border:'none',
-                  background:'linear-gradient(135deg,#0f3460,#533483)', color:'white',
+                  background:'linear-gradient(135deg,#134e5e,#71b280)', color:'white',
                   cursor:'pointer', fontSize:'16px', fontWeight:'bold',
                   display:'flex', alignItems:'center', gap:'14px', width:'100%',
-                  boxShadow:'0 4px 15px rgba(15,52,96,0.4)'}}>
+                  boxShadow:'0 4px 15px rgba(19,78,94,0.4)'}}>
                 <span style={{fontSize:'32px'}}>🍽️</span>
                 <div style={{textAlign:'left'}}>
                   <div style={{fontSize:'18px'}}>Customer</div>
