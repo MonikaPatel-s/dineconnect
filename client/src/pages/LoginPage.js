@@ -2,6 +2,7 @@ import { useState } from "react";
 import config from "../config";
 import "../App.css";
 import "../components/GoogleLogin.css";
+import logoImg from "../assets/logo.png";
 
 export default function LoginPage({ setUser }) {
   const [selectedRole, setSelectedRole] = useState(null);
@@ -86,11 +87,13 @@ export default function LoginPage({ setUser }) {
   const Branding = () => (
     <div className="login-branding">
       <div className="branding-content">
-        <div className="brand-logo"><span className="logo-icon">🍽️</span></div>
+        <div className="brand-logo">
+          <img src={logoImg} alt="DineConnect Logo" style={{width:'140px', height:'140px', objectFit:'contain'}} />
+        </div>
         <h1 className="brand-title">DineConnect</h1>
         <p className="brand-subtitle">Connecting Diners with Great Food</p>
         <div className="brand-description">
-          <p>Experience the future of dining with our innovative QR-based restaurant management system.</p>
+          <p>Where great food meets unforgettable moments.</p>
         </div>
         <div className="brand-features">
           <div className="feature-item"><span className="feature-icon">📱</span><span className="feature-text">Scan QR Menu</span></div>
