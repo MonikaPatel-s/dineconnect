@@ -114,9 +114,10 @@ mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/dineconnect
 const server = http.createServer(app);
 const io = socketIo(server, {
   cors: {
-    origin: ["http://localhost:3001", "http://localhost:3000", "http://100.102.244.77:3001"],
+    origin: "*",
     methods: ["GET", "POST"]
-  }
+  },
+  transports: ['websocket', 'polling']
 });
 
 // Socket.IO connection handling
