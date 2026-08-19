@@ -34,6 +34,21 @@ export default function MenuByTable({ user, setUser }) {
       navigate('/login');
       return;
     }
+    // Check role - staff/admin should not see customer menu
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      if (payload.role === 'staff') {
+        navigate('/staff');
+        return;
+      }
+      if (payload.role === 'admin') {
+        navigate('/admin');
+        return;
+      }
+    } catch(e) {
+      navigate('/login');
+      return;
+    }
     fetchTableInfo();
     fetchMenu();
     fetchCategories();
