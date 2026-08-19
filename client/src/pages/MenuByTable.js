@@ -27,33 +27,34 @@ export default function MenuByTable({ user, setUser }) {
   const { joinRoom, requestNotificationPermission } = useNotification();
 
   useEffect(() => {
-    // Save table slug and redirect to login if not logged in
+    // Always clear session on QR scan and redirect to login
     localStorage.setItem('pendingTableSlug', tableSlug);
     const token = localStorage.getItem('token');
+    
     if (!token) {
+      // No token - go to login
       navigate('/login');
       return;
     }
-    // Check role - staff/admin should not see customer menu
-    try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      if (payload.role === 'staff') {
-        navigate('/staff');
-        return;
-      }
-      if (payload.role === 'admin') {
-        navigate('/admin');
-        return;
-      }
-    } catch(e) {
+
+    // Check if this is a fresh QR scan (no user prop means direct URL access)
+    if (!user) {
+      // Clear token and go to login for fresh scan
+      localStorage.removeItem('token');
       navigate('/login');
       return;
     }
+
+    // Staff/Admin should not see customer menu
+    if (user.role === 'staff') { navigate('/staff'); return; }
+    if (user.role === 'admin') { navigate('/admin'); return; }
+
+    // Customer - load menu
     fetchTableInfo();
     fetchMenu();
     fetchCategories();
     loadCart();
-  }, [tableSlug]);
+  }, [tableSlug, user]);
 
   useEffect(() => {
     // Join table-specific notification room for guest users

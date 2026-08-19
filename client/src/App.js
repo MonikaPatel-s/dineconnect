@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { NotificationProvider } from "./contexts/NotificationContext";
@@ -16,6 +16,15 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // If opening a table QR URL (/m/...), always clear session for fresh login
+    if (window.location.pathname.startsWith('/m/')) {
+      const slug = window.location.pathname.replace('/m/', '');
+      localStorage.setItem('pendingTableSlug', slug);
+      localStorage.removeItem('token');
+      setUser(null);
+      setLoading(false);
+      return;
+    }
     // Check if user is logged in
     const token = localStorage.getItem('token');
     if (token) {
@@ -52,7 +61,11 @@ function App() {
                 {/* Public Routes */}
                 <Route path="/login" element={!user ? <LoginPage setUser={setUser} /> : <Navigate to={getDashboardRoute(user.role)} />} />
                 <Route path="/register" element={!user ? <Register /> : <Navigate to={getDashboardRoute(user.role)} />} />
-                <Route path="/m/:tableSlug" element={<MenuByTable user={user} setUser={setUser} />} />
+                <Route path="/m/:tableSlug" element={
+                  user && user.role === 'customer'
+                    ? <MenuByTable user={user} setUser={setUser} />
+                    : <Navigate to="/login" />
+                } />
 
                 {/* Protected Routes */}
                 <Route path="/customer" element={user && user.role === 'customer' ? <CustomerDashboard user={user} /> : <Navigate to="/login" />} />
