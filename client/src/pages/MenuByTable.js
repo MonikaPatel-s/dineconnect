@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import MenuItemCard from "../components/MenuItemCard";
 import Cart from "../components/Cart";
 import NotificationBell from "../components/NotificationBell";
@@ -10,8 +10,9 @@ import config from "../config";
 import { useNotification } from "../contexts/NotificationContext";
 import "../App.css";
 
-export default function MenuByTable() {
+export default function MenuByTable({ user, setUser }) {
   const { tableSlug } = useParams();
+  const navigate = useNavigate();
   const [table, setTable] = useState(null);
   const [menu, setMenu] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -26,6 +27,13 @@ export default function MenuByTable() {
   const { joinRoom, requestNotificationPermission } = useNotification();
 
   useEffect(() => {
+    // Save table slug and redirect to login if not logged in
+    localStorage.setItem('pendingTableSlug', tableSlug);
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
     fetchTableInfo();
     fetchMenu();
     fetchCategories();

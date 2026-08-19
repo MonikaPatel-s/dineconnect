@@ -52,7 +52,7 @@ function App() {
                 {/* Public Routes */}
                 <Route path="/login" element={!user ? <LoginPage setUser={setUser} /> : <Navigate to={getDashboardRoute(user.role)} />} />
                 <Route path="/register" element={!user ? <Register /> : <Navigate to={getDashboardRoute(user.role)} />} />
-                <Route path="/m/:tableSlug" element={<MenuByTable />} />
+                <Route path="/m/:tableSlug" element={<MenuByTable user={user} setUser={setUser} />} />
 
                 {/* Protected Routes */}
                 <Route path="/customer" element={user && user.role === 'customer' ? <CustomerDashboard user={user} /> : <Navigate to="/login" />} />
