@@ -1,10 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNotification } from '../contexts/NotificationContext';
 import '../App.css';
 
 const NotificationBell = () => {
   const { notifications, unreadCount, markAsRead, clearNotifications, isConnected } = useNotification();
   const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setShowDropdown(false);
+      }
+    };
+    if (showDropdown) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [showDropdown]);
 
   const handleNotificationClick = (notification) => {
     markAsRead(notification.id);
@@ -32,7 +50,7 @@ const NotificationBell = () => {
   };
 
   return (
-    <div className="notification-bell-container">
+    <div className="notification-bell-container" ref={dropdownRef}>
       <button 
         className={`notification-bell ${unreadCount > 0 ? 'has-notifications' : ''}`}
         onClick={() => setShowDropdown(!showDropdown)}
@@ -41,9 +59,6 @@ const NotificationBell = () => {
         {unreadCount > 0 && (
           <span className="notification-badge">{unreadCount}</span>
         )}
-        <span className={`connection-status ${isConnected ? 'connected' : 'disconnected'}`}>
-          {isConnected ? '🟢' : '🔴'}
-        </span>
       </button>
 
       {showDropdown && (
@@ -61,7 +76,22 @@ const NotificationBell = () => {
               )}
               <button 
                 onClick={() => setShowDropdown(false)}
-                style={{background:'none', border:'none', cursor:'pointer', fontSize:'20px', color:'#fff', lineHeight:1}}
+                style={{
+                  background:'rgba(255,255,255,0.2)',
+                  border:'none',
+                  cursor:'pointer',
+                  fontSize:'18px',
+                  color:'#fff',
+                  lineHeight:1,
+                  width:'28px',
+                  height:'28px',
+                  borderRadius:'50%',
+                  display:'flex',
+                  alignItems:'center',
+                  justifyContent:'center',
+                  flexShrink: 0
+                }}
+                title="Close"
               >
                 ✕
               </button>
@@ -105,7 +135,17 @@ const NotificationBell = () => {
 
           <div className="notification-footer">
             <small>
-              {isConnected ? '🟢 Real-time active' : '🔴 Reconnecting...'}
+              Status <span style={{
+                display:'inline-block',
+                width:'8px',
+                height:'8px',
+                borderRadius:'50%',
+                background: isConnected ? '#27ae60' : '#e74c3c',
+                marginLeft:'4px',
+                marginRight:'4px',
+                verticalAlign:'middle'
+              }}></span>
+              {isConnected ? 'Connected' : 'Disconnected'}
             </small>
           </div>
         </div>

@@ -34,6 +34,7 @@ export default function AdminDashboard({ user }) {
   useEffect(() => {
     fetchData();
     fetchPendingStaff();
+    fetchCoupons();
   }, []);
 
   const fetchPendingStaff = async () => {
@@ -330,6 +331,75 @@ export default function AdminDashboard({ user }) {
   const [showCatModal, setShowCatModal] = useState(false);
   const [catForm, setCatForm] = useState({ name: '', icon: '🍽️' });
 
+  // Coupon management state
+  const [coupons, setCoupons] = useState([]);
+  const [couponForm, setCouponForm] = useState({
+    code: '', discountType: 'percent', discountValue: '', minOrderAmount: '', maxUses: '100', expiryDate: ''
+  });
+  const [showCouponModal, setShowCouponModal] = useState(false);
+
+  const fetchCoupons = async () => {
+    try {
+      const res = await fetch(`${config.API_BASE_URL}/coupons`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        setCoupons(data);
+      }
+    } catch (e) {}
+  };
+
+  const saveCoupon = async () => {
+    if (!couponForm.code || !couponForm.discountValue) {
+      alert('Code aur Discount Value zaroori hai!');
+      return;
+    }
+    try {
+      const body = {
+        code: couponForm.code.toUpperCase(),
+        discountType: couponForm.discountType,
+        discountValue: parseFloat(couponForm.discountValue),
+        minOrderAmount: parseFloat(couponForm.minOrderAmount) || 0,
+        maxUses: parseInt(couponForm.maxUses) || 100,
+        expiryDate: couponForm.expiryDate || undefined
+      };
+      const res = await fetch(`${config.API_BASE_URL}/coupons`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+        body: JSON.stringify(body)
+      });
+      if (res.ok) {
+        alert('✅ Coupon create ho gaya!');
+        setShowCouponModal(false);
+        setCouponForm({ code: '', discountType: 'percent', discountValue: '', minOrderAmount: '', maxUses: '100', expiryDate: '' });
+        fetchCoupons();
+      } else {
+        const err = await res.json();
+        alert('Error: ' + err.message);
+      }
+    } catch (e) { alert('Server error'); }
+  };
+
+  const deleteCoupon = async (id, code) => {
+    if (!window.confirm(`Delete coupon "${code}"?`)) return;
+    try {
+      await fetch(`${config.API_BASE_URL}/coupons/${id}`, {
+        method: 'DELETE', headers: { 'Authorization': `Bearer ${token}` }
+      });
+      fetchCoupons();
+    } catch (e) {}
+  };
+
+  const toggleCoupon = async (id) => {
+    try {
+      const res = await fetch(`${config.API_BASE_URL}/coupons/${id}/toggle`, {
+        method: 'PATCH', headers: { 'Authorization': `Bearer ${token}` }
+      });
+      if (res.ok) fetchCoupons();
+    } catch (e) {}
+  };
+
   const saveCategory = async () => {
     if (!catForm.name) { alert('Category name zaroori hai!'); return; }
     try {
@@ -395,6 +465,7 @@ export default function AdminDashboard({ user }) {
           { key: 'menu', label: '🍽️ Menu Items' },
           { key: 'categories', label: '📂 Categories' },
           { key: 'tables', label: '🪑 Tables' },
+          { key: 'coupons', label: '🎟️ Coupons' },
           { key: 'staff', label: `👨‍🍳 Staff Approvals ${pendingStaff.length > 0 ? `(${pendingStaff.length})` : ''}` }
         ].map(tab => (
           <button
@@ -709,6 +780,152 @@ export default function AdminDashboard({ user }) {
                     ➕ Add
                   </button>
                   <button onClick={() => setShowCatModal(false)}
+                    style={{flex:1,padding:'12px',background:'#e74c3c',color:'white',border:'none',borderRadius:'10px',cursor:'pointer',fontWeight:'bold',fontSize:'16px'}}>
+                    ❌ Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'coupons' && (
+          <div className="categories-section">
+            <div className="section-header">
+              <h2>🎟️ Coupon Management</h2>
+              <button className="add-btn" onClick={() => setShowCouponModal(true)}>+ Create Coupon</button>
+            </div>
+
+            {coupons.length === 0 ? (
+              <div className="no-items" style={{textAlign:'center', padding:'40px', color:'#666'}}>
+                <p style={{fontSize:'48px'}}>🎟️</p>
+                <p>No coupons yet. Create one!</p>
+              </div>
+            ) : (
+              <div style={{display:'flex', flexDirection:'column', gap:'12px', marginTop:'16px'}}>
+                {coupons.map(coupon => (
+                  <div key={coupon._id} style={{
+                    background:'white', borderRadius:'12px', padding:'18px 20px',
+                    boxShadow:'0 2px 8px rgba(0,0,0,0.1)',
+                    display:'flex', justifyContent:'space-between', alignItems:'center',
+                    border:`2px solid ${coupon.isActive ? '#27ae60' : '#bdc3c7'}`
+                  }}>
+                    <div>
+                      <div style={{fontWeight:'bold', fontSize:'18px', letterSpacing:'1px'}}>
+                        🎟️ {coupon.code}
+                        <span style={{
+                          marginLeft:'10px', fontSize:'12px', padding:'2px 8px',
+                          borderRadius:'20px', background: coupon.isActive ? '#d5f5e3' : '#f0f0f0',
+                          color: coupon.isActive ? '#27ae60' : '#999'
+                        }}>
+                          {coupon.isActive ? 'Active' : 'Inactive'}
+                        </span>
+                      </div>
+                      <div style={{color:'#555', fontSize:'14px', marginTop:'4px'}}>
+                        {coupon.discountType === 'percent' ? `${coupon.discountValue}% OFF` : `₹${coupon.discountValue} OFF`}
+                        {coupon.minOrderAmount > 0 && ` · Min order ₹${coupon.minOrderAmount}`}
+                        {` · Used ${coupon.usedCount}/${coupon.maxUses}`}
+                        {coupon.expiryDate && ` · Expires ${new Date(coupon.expiryDate).toLocaleDateString()}`}
+                      </div>
+                    </div>
+                    <div style={{display:'flex', gap:'8px'}}>
+                      <button
+                        onClick={() => toggleCoupon(coupon._id)}
+                        style={{
+                          background: coupon.isActive ? '#f39c12' : '#27ae60',
+                          color:'white', border:'none', padding:'6px 14px', borderRadius:'8px',
+                          cursor:'pointer', fontWeight:'bold', fontSize:'13px'
+                        }}
+                      >
+                        {coupon.isActive ? '⏸ Disable' : '▶ Enable'}
+                      </button>
+                      <button
+                        onClick={() => deleteCoupon(coupon._id, coupon.code)}
+                        style={{background:'#e74c3c', color:'white', border:'none', padding:'6px 14px', borderRadius:'8px', cursor:'pointer', fontWeight:'bold', fontSize:'13px'}}
+                      >
+                        🗑️
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Create Coupon Modal */}
+        {showCouponModal && (
+          <div style={{position:'fixed',top:0,left:0,right:0,bottom:0,background:'rgba(0,0,0,0.7)',zIndex:9999,display:'flex',alignItems:'center',justifyContent:'center'}}>
+            <div style={{background:'white',borderRadius:'16px',padding:'30px',width:'90%',maxWidth:'460px',maxHeight:'90vh',overflowY:'auto'}}>
+              <h2 style={{color:'#1a1a2e',marginBottom:'20px'}}>🎟️ Create Coupon</h2>
+              <div style={{display:'flex',flexDirection:'column',gap:'14px'}}>
+                <div>
+                  <label style={{fontWeight:'bold',color:'#333'}}>Coupon Code *</label>
+                  <input
+                    value={couponForm.code}
+                    onChange={e => setCouponForm(f=>({...f, code: e.target.value.toUpperCase()}))}
+                    placeholder="e.g. SAVE20"
+                    style={{width:'100%',padding:'10px',borderRadius:'8px',border:'2px solid #ddd',marginTop:'4px',boxSizing:'border-box',textTransform:'uppercase',fontWeight:'bold',letterSpacing:'2px'}}
+                  />
+                </div>
+                <div>
+                  <label style={{fontWeight:'bold',color:'#333'}}>Discount Type *</label>
+                  <select
+                    value={couponForm.discountType}
+                    onChange={e => setCouponForm(f=>({...f, discountType: e.target.value}))}
+                    style={{width:'100%',padding:'10px',borderRadius:'8px',border:'2px solid #ddd',marginTop:'4px',boxSizing:'border-box'}}
+                  >
+                    <option value="percent">Percentage (e.g. 20%)</option>
+                    <option value="flat">Flat Amount (e.g. ₹50)</option>
+                  </select>
+                </div>
+                <div>
+                  <label style={{fontWeight:'bold',color:'#333'}}>
+                    {couponForm.discountType === 'percent' ? 'Discount % *' : 'Discount Amount (₹) *'}
+                  </label>
+                  <input
+                    type="number"
+                    value={couponForm.discountValue}
+                    onChange={e => setCouponForm(f=>({...f, discountValue: e.target.value}))}
+                    placeholder={couponForm.discountType === 'percent' ? 'e.g. 20' : 'e.g. 100'}
+                    style={{width:'100%',padding:'10px',borderRadius:'8px',border:'2px solid #ddd',marginTop:'4px',boxSizing:'border-box'}}
+                  />
+                </div>
+                <div>
+                  <label style={{fontWeight:'bold',color:'#333'}}>Minimum Order Amount (₹)</label>
+                  <input
+                    type="number"
+                    value={couponForm.minOrderAmount}
+                    onChange={e => setCouponForm(f=>({...f, minOrderAmount: e.target.value}))}
+                    placeholder="e.g. 300 (leave blank for no minimum)"
+                    style={{width:'100%',padding:'10px',borderRadius:'8px',border:'2px solid #ddd',marginTop:'4px',boxSizing:'border-box'}}
+                  />
+                </div>
+                <div>
+                  <label style={{fontWeight:'bold',color:'#333'}}>Max Uses</label>
+                  <input
+                    type="number"
+                    value={couponForm.maxUses}
+                    onChange={e => setCouponForm(f=>({...f, maxUses: e.target.value}))}
+                    placeholder="e.g. 100"
+                    style={{width:'100%',padding:'10px',borderRadius:'8px',border:'2px solid #ddd',marginTop:'4px',boxSizing:'border-box'}}
+                  />
+                </div>
+                <div>
+                  <label style={{fontWeight:'bold',color:'#333'}}>Expiry Date (optional)</label>
+                  <input
+                    type="date"
+                    value={couponForm.expiryDate}
+                    onChange={e => setCouponForm(f=>({...f, expiryDate: e.target.value}))}
+                    style={{width:'100%',padding:'10px',borderRadius:'8px',border:'2px solid #ddd',marginTop:'4px',boxSizing:'border-box'}}
+                  />
+                </div>
+                <div style={{display:'flex',gap:'10px',marginTop:'10px'}}>
+                  <button onClick={saveCoupon}
+                    style={{flex:1,padding:'12px',background:'linear-gradient(135deg,#667eea,#764ba2)',color:'white',border:'none',borderRadius:'10px',cursor:'pointer',fontWeight:'bold',fontSize:'16px'}}>
+                    🎟️ Create Coupon
+                  </button>
+                  <button onClick={() => setShowCouponModal(false)}
                     style={{flex:1,padding:'12px',background:'#e74c3c',color:'white',border:'none',borderRadius:'10px',cursor:'pointer',fontWeight:'bold',fontSize:'16px'}}>
                     ❌ Cancel
                   </button>

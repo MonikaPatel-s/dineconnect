@@ -19,22 +19,23 @@ export const NotificationProvider = ({ children }) => {
   useEffect(() => {
     // Initialize socket connection
     const getSocketUrl = () => {
-      // Production env variable
       if (process.env.REACT_APP_API_URL) {
         return process.env.REACT_APP_API_URL.replace('/api', '');
       }
       const hostname = window.location.hostname;
       if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return 'http://localhost:5001';
-      } else {
-        return 'https://dineconnect-hbyc.onrender.com';
       }
+      return 'https://dineconnect-hbyc.onrender.com';
     };
-    
+
     const newSocket = io(getSocketUrl(), {
-      transports: ['websocket', 'polling'],
-      reconnectionAttempts: 5,
-      reconnectionDelay: 1000
+      transports: ['polling', 'websocket'], // polling first — works reliably on Render free tier
+      reconnection: true,
+      reconnectionAttempts: 10,
+      reconnectionDelay: 2000,
+      reconnectionDelayMax: 10000,
+      timeout: 20000
     });
     
     newSocket.on('connect', () => {

@@ -193,7 +193,12 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
               <div className="cart-items">
                 {cart.map((item) => (
                   <div key={item._id} className="cart-item">
-                    <img src={item.img} alt={item.name} className="cart-item-image" />
+                    <img
+                      src={item.imageUrl || item.img || `https://via.placeholder.com/60x60/ff6b35/ffffff?text=${encodeURIComponent(item.name.charAt(0))}`}
+                      alt={item.name}
+                      className="cart-item-image"
+                      onError={e => { e.target.onerror = null; e.target.src = `https://via.placeholder.com/60x60/ff6b35/ffffff?text=${encodeURIComponent(item.name.charAt(0))}`; }}
+                    />
                     <div className="cart-item-details">
                       <h4>{item.name}</h4>
                       <p className="cart-item-price">₹{item.price}</p>
@@ -255,11 +260,45 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
                     ))}
                   </select>
                 </div>
+                {/* Coupon Code Input */}
+                <div style={{marginBottom:'12px'}}>
+                  <label style={{fontWeight:'bold',fontSize:'14px'}}>🎟️ Coupon Code</label>
+                  <div style={{display:'flex',gap:'8px',marginTop:'6px'}}>
+                    <input
+                      type="text"
+                      value={couponCode}
+                      onChange={e => setCouponCode(e.target.value.toUpperCase())}
+                      placeholder="Enter coupon code"
+                      style={{flex:1,padding:'8px 12px',borderRadius:'8px',border:'2px solid #667eea',fontSize:'14px',textTransform:'uppercase'}}
+                    />
+                    <button
+                      onClick={applyCoupon}
+                      disabled={couponLoading || !couponCode.trim()}
+                      style={{padding:'8px 16px',background:'#667eea',color:'white',border:'none',borderRadius:'8px',cursor:'pointer',fontWeight:'bold',fontSize:'14px'}}
+                    >
+                      {couponLoading ? '⏳' : 'Apply'}
+                    </button>
+                    {couponDiscount && (
+                      <button
+                        onClick={() => { setCouponDiscount(null); setCouponCode(''); }}
+                        style={{padding:'8px 12px',background:'#e74c3c',color:'white',border:'none',borderRadius:'8px',cursor:'pointer',fontWeight:'bold'}}
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                  {couponDiscount && (
+                    <div style={{color:'green',fontSize:'13px',marginTop:'4px'}}>
+                      ✅ {couponDiscount.message || `Coupon applied!`}
+                    </div>
+                  )}
+                </div>
+
                 <div className="total-amount">
                   <div>Subtotal: ₹{subtotal}</div>
-                  {discountAmount > 0 && (
+                  {spinDiscountAmount > 0 && (
                     <div style={{color: 'green'}}>
-                      🎉 Discount ({appliedDiscount.discount}% OFF): -₹{discountAmount}
+                      🎉 Spin Discount ({appliedDiscount.discount}% OFF): -₹{spinDiscountAmount}
                     </div>
                   )}
                   {appliedDiscount?.special === 'free_dessert' && (
@@ -267,6 +306,11 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
                   )}
                   {appliedDiscount?.special === 'free_drink' && (
                     <div style={{color: 'green'}}>🥤 Free Drink Applied!</div>
+                  )}
+                  {couponDiscountAmount > 0 && (
+                    <div style={{color: 'green'}}>
+                      🎟️ Coupon ({couponDiscount.discountType === 'percent' ? couponDiscount.discountValue + '% OFF' : '₹' + couponDiscount.discountValue + ' OFF'}): -₹{couponDiscountAmount}
+                    </div>
                   )}
                   <strong>Total: ₹{total}</strong>
                 </div>
