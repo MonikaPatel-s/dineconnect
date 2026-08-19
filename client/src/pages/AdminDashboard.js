@@ -1013,7 +1013,7 @@ export default function AdminDashboard({ user }) {
                   
                   <div className="table-qr-preview">
                     <QRCodeDisplay 
-                      value={`http://${window.location.hostname === 'localhost' ? '100.102.244.77' : window.location.hostname}:3001/m/${table.qrSlug}`}
+                      value={`https://dineconnect-4yss.vercel.app/m/${table.qrSlug}`}
                       size={120}
                     />
                   </div>

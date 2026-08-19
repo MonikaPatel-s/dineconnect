@@ -417,7 +417,7 @@ export default function CustomerDashboard({ user }) {
                 
                 <div className="qr-code-container">
                   <QRCodeDisplay 
-                    value={`http://${window.location.hostname === 'localhost' ? '10.235.195.51' : window.location.hostname}:3001/m/${table.qrSlug}`}
+                    value={`https://dineconnect-4yss.vercel.app/m/${table.qrSlug}`}
                     size={150}
                   />
                 </div>

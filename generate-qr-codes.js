@@ -3,11 +3,11 @@ const fs = require('fs');
 
 // Sample table URLs for testing
 const tableUrls = [
-  'http://localhost:3001/m/table-1-1762347240202-dmaxjq17s',
-  'http://localhost:3001/m/table-2-1762347240202-shtghv2qc',
-  'http://localhost:3001/m/table-3-1762347240202-arenv4oe8',
-  'http://localhost:3001/m/table-4-1762347240202-8pj68v365',
-  'http://localhost:3001/m/table-5-1762347240202-d4r12fr4f'
+  'https://dineconnect-4yss.vercel.app/m/table-1-1762347240202-dmaxjq17s',
+  'https://dineconnect-4yss.vercel.app/m/table-2-1762347240202-shtghv2qc',
+  'https://dineconnect-4yss.vercel.app/m/table-3-1762347240202-arenv4oe8',
+  'https://dineconnect-4yss.vercel.app/m/table-4-1762347240202-8pj68v365',
+  'https://dineconnect-4yss.vercel.app/m/table-5-1762347240202-d4r12fr4f'
 ];
 
 const generateQRCodes = async () => {
