@@ -260,6 +260,9 @@ export default function CustomerDashboard({ user }) {
           <div>
             <h1>🍽️ Welcome, {user?.name || 'Guest'}!</h1>
             <p>What would you like to order today?</p>
+            <button className="logout-btn mobile-logout-only" onClick={logout} style={{display:'none'}}>
+              {t('logout')}
+            </button>
           </div>
           <div className="header-actions">
             <NotificationBell />
