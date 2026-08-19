@@ -22,9 +22,13 @@ export default function Cart({ cart, onClose, onUpdateItem, onPlaceOrder, onClea
   useEffect(() => {
     fetch(`${config.API_BASE_URL}/tables/public`)
       .then(r => r.json())
-      .then(data => setTables(data))
+      .then(data => {
+        setTables(data);
+        // Auto-select table after tables are loaded
+        if (preSelectedTable) setSelectedTable(preSelectedTable);
+      })
       .catch(() => {});
-  }, []);
+  }, [preSelectedTable]);
 
   // Auto-select table when preSelectedTable changes
   useEffect(() => {

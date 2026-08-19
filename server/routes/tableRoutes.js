@@ -18,7 +18,7 @@ router.get("/", adminOnly, async (req, res) => {
 router.get("/public", async (req, res) => {
   try {
     const tables = await Table.find({ isActive: true })
-      .select('number capacity qrSlug')
+      .select('_id number capacity qrSlug')
       .sort({ number: 1 });
     res.json(tables);
   } catch (error) {
