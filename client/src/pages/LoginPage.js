@@ -260,62 +260,60 @@ export default function LoginPage({ setUser }) {
 
   // ─── STAFF ───
   if (selectedRole === 'staff') {
-    const staffColor = '#c0392b';
-    const staffGradient = 'linear-gradient(135deg,#c0392b,#e74c3c)';
     return (
       <div className="login-page">
         <Branding />
-        <div className="login-form-section" style={{background: staffGradient}}>
+        <div className="login-form-section" style={{background:'white'}}>
           <div className="login-container" style={{padding:'30px 40px', overflowY:'auto', maxHeight:'100vh'}}>
-            {BackBtn('white')}
-            <h2 style={{color:'white', fontWeight:'900', marginBottom:'20px'}}>👨‍🍳 Chef / Staff</h2>
+            {BackBtn('#3949ab')}
+            <h2 style={{color:'#000', fontWeight:'900', marginBottom:'20px', WebkitTextFillColor:'#000'}}>👨‍🍳 Chef / Staff</h2>
             <div style={{display:'flex', gap:'10px', marginBottom:'20px'}}>
               <button onClick={() => setStaffMode('login')}
                 style={{flex:1, padding:'10px', borderRadius:'8px', cursor:'pointer', fontWeight:'bold',
-                  background: staffMode === 'login' ? 'white' : 'rgba(255,255,255,0.2)',
-                  color: staffMode === 'login' ? staffColor : 'white', border:'2px solid white'}}>
+                  background: staffMode === 'login' ? 'linear-gradient(135deg,#1a237e,#3949ab)' : '#f5f5f5',
+                  color: staffMode === 'login' ? 'white' : '#333', border:'2px solid #3949ab'}}>
                 Login
               </button>
               <button onClick={() => setStaffMode('signup')}
                 style={{flex:1, padding:'10px', borderRadius:'8px', cursor:'pointer', fontWeight:'bold',
-                  background: staffMode === 'signup' ? 'white' : 'rgba(255,255,255,0.2)',
-                  color: staffMode === 'signup' ? staffColor : 'white', border:'2px solid white'}}>
+                  background: staffMode === 'signup' ? 'linear-gradient(135deg,#1a237e,#3949ab)' : '#f5f5f5',
+                  color: staffMode === 'signup' ? 'white' : '#333', border:'2px solid #3949ab'}}>
                 Sign Up
               </button>
             </div>
             {staffMode === 'login' ? (
               <div className="login-form">
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Email</label>
-                  <input type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                  <label style={{color:'#000', fontWeight:'700'}}>Email</label>
+                  <input type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} style={{...inputStyle, borderColor:'#3949ab'}} />
                 </div>
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Password</label>
+                  <label style={{color:'#000', fontWeight:'700'}}>Password</label>
                   <input type="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && handleLogin('staff')} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                    onKeyDown={e => e.key === 'Enter' && handleLogin('staff')} style={{...inputStyle, borderColor:'#3949ab'}} />
                 </div>
-                <button onClick={() => handleLogin('staff')} className="login-btn" style={{background:'white', color:staffColor, fontWeight:'900'}}>
+                <button onClick={() => handleLogin('staff')} className="login-btn" style={{background:'linear-gradient(135deg,#1a237e,#3949ab)'}}>
                   👨‍🍳 Login as Staff
                 </button>
               </div>
             ) : (
               <div className="login-form">
-                <div style={{background:'rgba(255,255,255,0.2)', border:'1px solid white', borderRadius:'8px', padding:'12px', marginBottom:'10px', color:'white', fontSize:'14px'}}>
+                <div style={{background:'#e8eaf6', border:'1px solid #3949ab', borderRadius:'8px', padding:'12px', marginBottom:'10px', color:'#1a237e', fontSize:'14px'}}>
                   ⚠️ Sign up ke baad admin approval zaruri hai
                 </div>
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Full Name</label>
-                  <input type="text" placeholder="Enter name" value={name} onChange={e => setName(e.target.value)} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                  <label style={{color:'#000', fontWeight:'700'}}>Full Name</label>
+                  <input type="text" placeholder="Enter name" value={name} onChange={e => setName(e.target.value)} style={{...inputStyle, borderColor:'#3949ab'}} />
                 </div>
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Email</label>
-                  <input type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                  <label style={{color:'#000', fontWeight:'700'}}>Email</label>
+                  <input type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} style={{...inputStyle, borderColor:'#3949ab'}} />
                 </div>
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Password</label>
-                  <input type="password" placeholder="Create password" value={password} onChange={e => setPassword(e.target.value)} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                  <label style={{color:'#000', fontWeight:'700'}}>Password</label>
+                  <input type="password" placeholder="Create password" value={password} onChange={e => setPassword(e.target.value)} style={{...inputStyle, borderColor:'#3949ab'}} />
                 </div>
-                <button onClick={() => handleSignup('staff')} className="login-btn" style={{background:'white', color:staffColor, fontWeight:'900'}}>
+                <button onClick={() => handleSignup('staff')} className="login-btn" style={{background:'linear-gradient(135deg,#1a237e,#3949ab)'}}>
                   📤 Send Request to Admin
                 </button>
               </div>
@@ -328,59 +326,57 @@ export default function LoginPage({ setUser }) {
 
   // ─── CUSTOMER ───
   if (selectedRole === 'customer') {
-    const custColor = '#0f3460';
-    const custGradient = 'linear-gradient(135deg,#0f3460,#533483)';
     return (
       <div className="login-page">
         <Branding />
-        <div className="login-form-section" style={{background: custGradient}}>
+        <div className="login-form-section" style={{background:'white'}}>
           <div className="login-container" style={{padding:'30px 40px', overflowY:'auto', maxHeight:'100vh'}}>
-            {BackBtn('white')}
-            <h2 style={{color:'white', fontWeight:'900', marginBottom:'20px'}}>🍽️ Customer</h2>
+            {BackBtn('#006064')}
+            <h2 style={{color:'#000', fontWeight:'900', marginBottom:'20px', WebkitTextFillColor:'#000'}}>🍽️ Customer</h2>
             <div style={{display:'flex', gap:'10px', marginBottom:'20px'}}>
               <button onClick={() => setCustomerMode('login')}
                 style={{flex:1, padding:'10px', borderRadius:'8px', cursor:'pointer', fontWeight:'bold',
-                  background: customerMode === 'login' ? 'white' : 'rgba(255,255,255,0.2)',
-                  color: customerMode === 'login' ? custColor : 'white', border:'2px solid white'}}>
+                  background: customerMode === 'login' ? 'linear-gradient(135deg,#006064,#00acc1)' : '#f5f5f5',
+                  color: customerMode === 'login' ? 'white' : '#333', border:'2px solid #00acc1'}}>
                 Login
               </button>
               <button onClick={() => setCustomerMode('signup')}
                 style={{flex:1, padding:'10px', borderRadius:'8px', cursor:'pointer', fontWeight:'bold',
-                  background: customerMode === 'signup' ? 'white' : 'rgba(255,255,255,0.2)',
-                  color: customerMode === 'signup' ? custColor : 'white', border:'2px solid white'}}>
+                  background: customerMode === 'signup' ? 'linear-gradient(135deg,#006064,#00acc1)' : '#f5f5f5',
+                  color: customerMode === 'signup' ? 'white' : '#333', border:'2px solid #00acc1'}}>
                 Sign Up
               </button>
             </div>
             {customerMode === 'login' ? (
               <div className="login-form">
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Email</label>
-                  <input type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                  <label style={{color:'#000', fontWeight:'700'}}>Email</label>
+                  <input type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} style={{...inputStyle, borderColor:'#00acc1'}} />
                 </div>
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Password</label>
+                  <label style={{color:'#000', fontWeight:'700'}}>Password</label>
                   <input type="password" placeholder="Enter password" value={password} onChange={e => setPassword(e.target.value)}
-                    onKeyDown={e => e.key === 'Enter' && handleLogin('customer')} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                    onKeyDown={e => e.key === 'Enter' && handleLogin('customer')} style={{...inputStyle, borderColor:'#00acc1'}} />
                 </div>
-                <button onClick={() => handleLogin('customer')} className="login-btn" style={{background:'white', color:custColor, fontWeight:'900'}}>
+                <button onClick={() => handleLogin('customer')} className="login-btn" style={{background:'linear-gradient(135deg,#006064,#00acc1)'}}>
                   🍽️ Login
                 </button>
               </div>
             ) : (
               <div className="login-form">
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Full Name</label>
-                  <input type="text" placeholder="Enter name" value={name} onChange={e => setName(e.target.value)} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                  <label style={{color:'#000', fontWeight:'700'}}>Full Name</label>
+                  <input type="text" placeholder="Enter name" value={name} onChange={e => setName(e.target.value)} style={{...inputStyle, borderColor:'#00acc1'}} />
                 </div>
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Email</label>
-                  <input type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                  <label style={{color:'#000', fontWeight:'700'}}>Email</label>
+                  <input type="email" placeholder="Enter email" value={email} onChange={e => setEmail(e.target.value)} style={{...inputStyle, borderColor:'#00acc1'}} />
                 </div>
                 <div className="input-group">
-                  <label style={{color:'white', fontWeight:'700'}}>Password</label>
-                  <input type="password" placeholder="Create password" value={password} onChange={e => setPassword(e.target.value)} style={{...inputStyle, borderColor:'rgba(255,255,255,0.5)'}} />
+                  <label style={{color:'#000', fontWeight:'700'}}>Password</label>
+                  <input type="password" placeholder="Create password" value={password} onChange={e => setPassword(e.target.value)} style={{...inputStyle, borderColor:'#00acc1'}} />
                 </div>
-                <button onClick={() => handleSignup('customer')} className="login-btn" style={{background:'white', color:custColor, fontWeight:'900'}}>
+                <button onClick={() => handleSignup('customer')} className="login-btn" style={{background:'linear-gradient(135deg,#006064,#00acc1)'}}>
                   ✅ Create Account
                 </button>
               </div>
