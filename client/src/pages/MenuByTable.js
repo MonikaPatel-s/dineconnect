@@ -6,6 +6,7 @@ import NotificationBell from "../components/NotificationBell";
 import VoiceOrdering from "../components/VoiceOrdering";
 import ChatBot from "../components/ChatBot";
 import SpinWheel from "../components/SpinWheel";
+import RatingPopup from "../components/RatingPopup";
 import config from "../config";
 import { useNotification } from "../contexts/NotificationContext";
 import "../App.css";
@@ -24,7 +25,9 @@ export default function MenuByTable({ user, setUser }) {
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const [guestSession] = useState(() => 'guest-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9));
-  const { joinRoom, requestNotificationPermission } = useNotification();
+  const [showRatingPopup, setShowRatingPopup] = useState(false);
+  const [ratingOrderInfo, setRatingOrderInfo] = useState(null);
+  const { joinRoom, requestNotificationPermission, socket } = useNotification();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -57,6 +60,17 @@ export default function MenuByTable({ user, setUser }) {
       requestNotificationPermission();
     }
   }, [table, guestSession, joinRoom, requestNotificationPermission]);
+
+  // Listen for rating request after order served
+  useEffect(() => {
+    if (socket) {
+      socket.on('rating-request', (data) => {
+        setRatingOrderInfo(data);
+        setShowRatingPopup(true);
+      });
+      return () => socket.off('rating-request');
+    }
+  }, [socket]);
 
   const fetchTableInfo = async () => {
     try {
@@ -451,6 +465,14 @@ export default function MenuByTable({ user, setUser }) {
         currentTable={table}
         onAddToCart={addToCart}
       />
+
+      {/* Rating Popup */}
+      {showRatingPopup && (
+        <RatingPopup
+          orderInfo={ratingOrderInfo}
+          onClose={() => setShowRatingPopup(false)}
+        />
+      )}
     </div>
   );
 }

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import config from "../config";
 import "../App.css";
@@ -94,7 +94,16 @@ export default function LoginPage({ setUser }) {
     }
   };
 
-  const Branding = () => (
+  const Branding = () => {
+    const [reviews, setReviews] = useState([]);
+    useEffect(() => {
+      fetch(`${config.API_BASE_URL}/restaurant-reviews`)
+        .then(r => r.json())
+        .then(data => setReviews(data))
+        .catch(() => {});
+    }, []);
+
+    return (
     <div className="login-branding">
       <div className="branding-content">
         <div className="brand-logo"><span className="logo-icon">🍽️</span></div>
@@ -109,9 +118,46 @@ export default function LoginPage({ setUser }) {
             <span className="feature-text">Rate & Review</span>
           </div>
         </div>
+
+        {/* Customer Reviews Section */}
+        {reviews.length > 0 && (
+          <div style={{marginTop:'20px', width:'100%'}}>
+            <h3 style={{color:'white', fontSize:'16px', marginBottom:'12px', opacity:0.9}}>
+              💬 What our customers say
+            </h3>
+            <div style={{display:'flex', flexDirection:'column', gap:'10px', maxHeight:'280px', overflowY:'auto'}}>
+              {reviews.map(r => (
+                <div key={r._id} style={{
+                  background:'rgba(255,255,255,0.15)', borderRadius:'12px',
+                  padding:'12px', textAlign:'left', backdropFilter:'blur(5px)'
+                }}>
+                  <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'4px'}}>
+                    <span style={{color:'white', fontWeight:'bold', fontSize:'14px'}}>
+                      {r.customerName}
+                    </span>
+                    <span style={{fontSize:'16px'}}>
+                      {'★'.repeat(r.rating)}{'☆'.repeat(5 - r.rating)}
+                    </span>
+                  </div>
+                  {r.description && (
+                    <p style={{color:'rgba(255,255,255,0.85)', fontSize:'13px', margin:0}}>
+                      "{r.description}"
+                    </p>
+                  )}
+                  {r.tableNumber && (
+                    <span style={{color:'rgba(255,255,255,0.6)', fontSize:'11px'}}>
+                      Table {r.tableNumber}
+                    </span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
+  };
 
   const BackBtn = (color) => (
     <button onClick={() => { setSelectedRole(null); resetFields(); }}
