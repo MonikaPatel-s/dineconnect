@@ -22,7 +22,7 @@ export default function StaffDashboard({ user }) {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const allData = await allRes.json();
-      setAllOrders((allData.orders || []).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt)));
+      setAllOrders((allData.orders || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)));
 
       // Fetch filtered orders for display
       const url = (selectedStatus === "overview")
@@ -32,8 +32,8 @@ export default function StaffDashboard({ user }) {
         headers: { "Authorization": `Bearer ${token}` }
       });
       const data = await res.json();
-      // FIFO - pehla aaya pehle dikhega
-      const sorted = (data.orders || []).sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+      // Latest pehle dikhega (descending)
+      const sorted = (data.orders || []).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       setOrders(sorted);
     } catch (err) {
       console.error("Error fetching orders:", err);
@@ -241,7 +241,7 @@ export default function StaffDashboard({ user }) {
               <div className="order-header">
                 <div className="order-number">
                   <span style={{background:'#f39c12', color:'white', borderRadius:'50%', width:'28px', height:'28px', display:'inline-flex', alignItems:'center', justifyContent:'center', fontWeight:'bold', marginRight:'8px', fontSize:'13px'}}>
-                    {index + 1}
+                    {orders.length - index}
                   </span>
                   #{order.orderNumber}
                 </div>
