@@ -79,6 +79,22 @@ export const NotificationProvider = ({ children }) => {
       });
     });
 
+    // Listen for rating request - show after 10 min
+    newSocket.on('rating-request', (data) => {
+      console.log('⭐ Rating request received:', data);
+      // Store for RatingPopup to pick up
+      window.__pendingRating = data;
+      addNotification({
+        id: Date.now(),
+        type: 'rating-request',
+        title: '⭐ Rate Your Experience',
+        message: `How was your meal at Table ${data.tableNumber}? Please rate us!`,
+        data: data,
+        timestamp: new Date(),
+        read: false
+      });
+    });
+
     // Listen for new order alerts (for kitchen staff)
     newSocket.on('new-order-alert', (data) => {
       console.log('🍽️ New order alert:', data);

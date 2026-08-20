@@ -89,6 +89,18 @@ export default function MenuByTable({ user, setUser }) {
     }
   }, [socket]);
 
+  // Check for pending rating from notification context
+  useEffect(() => {
+    const checkPendingRating = setInterval(() => {
+      if (window.__pendingRating) {
+        setRatingOrderInfo(window.__pendingRating);
+        setShowRatingPopup(true);
+        window.__pendingRating = null;
+      }
+    }, 5000);
+    return () => clearInterval(checkPendingRating);
+  }, []);
+
   const fetchTableInfo = async () => {
     try {
       const apiUrl = `${config.API_BASE_URL}/tables/by-slug/${tableSlug}`;
