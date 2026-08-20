@@ -227,7 +227,7 @@ router.patch("/:id/status", staffOrAdmin, async (req, res) => {
             customerName: order.customerId?.name || order.customerName || 'Guest',
             message: 'How was your experience? Please rate us!'
           });
-        }, 15 * 60 * 1000); // 15 minutes
+        }, 10 * 60 * 1000); // 10 minutes
       }
     }
 

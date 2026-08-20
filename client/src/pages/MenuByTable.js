@@ -68,7 +68,24 @@ export default function MenuByTable({ user, setUser }) {
         setRatingOrderInfo(data);
         setShowRatingPopup(true);
       });
-      return () => socket.off('rating-request');
+      // Also listen for order-update and show rating when served
+      socket.on('order-update', (data) => {
+        if (data.status === 'served') {
+          setTimeout(() => {
+            setRatingOrderInfo({
+              orderId: data.orderId,
+              orderNumber: data.orderNumber,
+              tableNumber: data.tableNumber,
+              customerName: 'Guest'
+            });
+            setShowRatingPopup(true);
+          }, 10 * 60 * 1000); // 10 minutes
+        }
+      });
+      return () => {
+        socket.off('rating-request');
+        socket.off('order-update');
+      };
     }
   }, [socket]);
 
