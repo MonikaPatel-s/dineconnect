@@ -26,6 +26,10 @@ const NotificationBell = () => {
 
   const handleNotificationClick = (notification) => {
     markAsRead(notification.id);
+    // If rating notification, open rating page
+    if (notification.type === 'rating-request' && notification.data?.link) {
+      window.location.href = notification.data.link;
+    }
   };
 
   const formatTime = (timestamp) => {
@@ -44,6 +48,7 @@ const NotificationBell = () => {
       case 'order-update': return '🍽️';
       case 'new-order': return '🔔';
       case 'kitchen-update': return '👨‍🍳';
+      case 'rating-request': return '⭐';
       case 'system': return '⚙️';
       default: return '📱';
     }

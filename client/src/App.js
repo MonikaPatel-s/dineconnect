@@ -9,6 +9,7 @@ import CustomerDashboard from "./pages/CustomerDashboard";
 import StaffDashboard from "./pages/StaffDashboard";
 import AdminDashboard from "./pages/AdminDashboard";
 import MenuByTable from "./pages/MenuByTable";
+import RatingPage from "./pages/RatingPage";
 import "./App.css";
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
                 <Route path="/login" element={!user ? <LoginPage setUser={setUser} /> : <Navigate to={getLoginRedirect(user)} />} />
                 <Route path="/register" element={!user ? <Register /> : <Navigate to={getDashboardRoute(user.role)} />} />
                 <Route path="/m/:tableSlug" element={<MenuByTable user={user} setUser={setUser} />} />
+                <Route path="/rate/:orderId" element={<RatingPage />} />
 
                 {/* Protected Routes */}
                 <Route path="/customer" element={user && user.role === 'customer' ? <CustomerDashboard user={user} /> : <Navigate to="/login" />} />

@@ -79,7 +79,7 @@ export const NotificationProvider = ({ children }) => {
       });
     });
 
-    // Listen for rating request - show after 10 min
+    // Listen for rating request - show after order served
     newSocket.on('rating-request', (data) => {
       console.log('⭐ Rating request received:', data);
       // Store for RatingPopup to pick up
@@ -88,8 +88,8 @@ export const NotificationProvider = ({ children }) => {
         id: Date.now(),
         type: 'rating-request',
         title: '⭐ Rate Your Experience',
-        message: `How was your meal at Table ${data.tableNumber}? Please rate us!`,
-        data: data,
+        message: `How was your meal? Tap to rate us!`,
+        data: { ...data, link: `/rate/${data.orderId}` },
         timestamp: new Date(),
         read: false
       });
