@@ -217,17 +217,15 @@ router.patch("/:id/status", staffOrAdmin, async (req, res) => {
         await Table.findByIdAndUpdate(order.tableId._id, { status: 'available' });
       }
 
-      // Send rating notification after 15 minutes when order is served
+      // When order is served, immediately send rating request
       if (status === 'served' && global.io) {
-        setTimeout(() => {
-          global.io.to(`table-${order.tableId._id}`).emit('rating-request', {
-            orderId: order._id,
-            orderNumber: order.orderNumber,
-            tableNumber: order.tableId.number,
-            customerName: order.customerId?.name || order.customerName || 'Guest',
-            message: 'How was your experience? Please rate us!'
-          });
-        }, 10 * 60 * 1000); // 10 minutes
+        global.io.to(`table-${order.tableId._id}`).emit('rating-request', {
+          orderId: order._id,
+          orderNumber: order.orderNumber,
+          tableNumber: order.tableId.number,
+          customerName: order.customerId?.name || order.customerName || 'Guest',
+          message: 'How was your experience? Please rate us!'
+        });
       }
     }
 
